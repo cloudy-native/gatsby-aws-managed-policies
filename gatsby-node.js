@@ -132,7 +132,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       const policyData = {
         policy,
         document,
-        services
+        services,
       }
       if (!serviceDirectory[service]) {
         serviceDirectory[service] = [policyData]
@@ -152,6 +152,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     })
   })
+
+  // // Search page
+  // //
+  // createPage({
+  //   path: "/search",
+  //   component: slash(searchPageTemplate),
+  //   context: {
+  //     policyData: data.data.allPolicyMetadata.nodes,
+  //     options: {
+  //       indexStrategy: "Prefix match",
+  //       searchSanitizer: "Lower Case",
+  //     },
+  //   },
+  // })
 }
 
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {

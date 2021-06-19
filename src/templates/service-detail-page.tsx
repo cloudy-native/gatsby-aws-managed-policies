@@ -7,9 +7,6 @@ import PolicyCardGrid from "../components/policy-card-grid"
 function ServiceDetailPage({ pageContext }) {
   const { service, policyData } = pageContext
 
-  console.log("### service", service)
-  console.log("### policies", policyData)
-
   const cards: Card[] = policyData.slice(0, 10).map(p => {
     return {
       policy: p.policy,
@@ -17,7 +14,6 @@ function ServiceDetailPage({ pageContext }) {
       services: p.services
     }
   })
-  console.log("### cards", cards)
 
   return (
     <>

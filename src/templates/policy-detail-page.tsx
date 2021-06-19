@@ -1,5 +1,5 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons"
-import { Code, Container, Grid, GridItem, Heading, Link, Table, Tbody, Td, Text, Th, Thead, Tr, VStack } from "@chakra-ui/react"
+import { Button, Code, Container, Grid, GridItem, Heading, Link, Table, Tbody, Td, Text, Th, Thead, Tr, VStack } from "@chakra-ui/react"
 import React, { useMemo } from "react"
 import { useSortBy, useTable } from "react-table"
 import ServicesList from "../components/services-list"

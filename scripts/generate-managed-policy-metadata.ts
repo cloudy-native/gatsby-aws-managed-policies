@@ -118,8 +118,6 @@ async function run() {
 
     await Promise.all(tasks)
 
-    console.log('Writing metadata')
-
     fs.writeFileSync(metadataFile, JSON.stringify(policyMetadata, null, 2))
 }
 

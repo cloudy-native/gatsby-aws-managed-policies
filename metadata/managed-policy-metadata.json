@@ -3697,13 +3697,13 @@
       "PolicyId": "ANPAIBTLDQMIC6UOIGFWA",
       "Arn": "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
       "Path": "/",
-      "DefaultVersionId": "v4",
+      "DefaultVersionId": "v5",
       "AttachmentCount": 3,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "This policy provides Kubernetes the permissions it requires to manage resources on your behalf. Kubernetes requires Ec2:CreateTags permissions to place identifying information on EC2 resources including but not limited to Instances, Security Groups, and Elastic Network Interfaces. ",
       "CreateDate": "2018-05-27T21:06:14.000Z",
-      "UpdateDate": "2020-02-21T20:10:11.000Z",
+      "UpdateDate": "2021-06-15T20:57:05.000Z",
       "Tags": []
     },
     "document": [
@@ -3734,6 +3734,9 @@
           "ec2:ModifyInstanceAttribute",
           "ec2:ModifyVolume",
           "ec2:RevokeSecurityGroupIngress",
+          "ec2:DescribeAccountAttributes",
+          "ec2:DescribeAddresses",
+          "ec2:DescribeInternetGateways",
           "elasticloadbalancing:AddTags",
           "elasticloadbalancing:ApplySecurityGroupsToLoadBalancer",
           "elasticloadbalancing:AttachLoadBalancerToSubnets",
@@ -8381,13 +8384,13 @@
       "PolicyId": "ANPAIM7JPETWHTYNBQSZE",
       "Arn": "arn:aws:iam::aws:policy/aws-service-role/AWSLicenseManagerServiceRolePolicy",
       "Path": "/aws-service-role/",
-      "DefaultVersionId": "v4",
+      "DefaultVersionId": "v6",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "AWS License Manager service default role policy",
       "CreateDate": "2018-11-26T19:02:53.000Z",
-      "UpdateDate": "2021-03-09T20:23:10.000Z",
+      "UpdateDate": "2021-06-17T03:54:13.000Z",
       "Tags": []
     },
     "document": [
@@ -8399,6 +8402,16 @@
         ],
         "Resource": [
           "arn:aws:iam::*:role/aws-service-role/license-management.marketplace.amazonaws.com/AWSServiceRoleForMarketplaceLicenseManagement"
+        ]
+      },
+      {
+        "Sid": "IAMPermissionsForCreatingMemberSLR",
+        "Effect": "Allow",
+        "Action": [
+          "iam:CreateServiceLinkedRole"
+        ],
+        "Resource": [
+          "arn:*:iam::*:role/aws-service-role/license-manager.member-account.amazonaws.com/AWSServiceRoleForAWSLicenseManagerMemberAccountRole"
         ]
       },
       {
@@ -8481,7 +8494,8 @@
         "Effect": "Allow",
         "Action": [
           "organizations:ListAWSServiceAccessForOrganization",
-          "organizations:DescribeOrganization"
+          "organizations:DescribeOrganization",
+          "organizations:ListDelegatedAdministrators"
         ],
         "Resource": [
           "*"
@@ -8494,8 +8508,7 @@
           "license-manager:GetServiceSettings",
           "license-manager:GetLicense*",
           "license-manager:UpdateLicenseSpecificationsForResource",
-          "license-manager:ListUsageForLicenseConfiguration",
-          "license-manager:ListDistributedGrants"
+          "license-manager:List*"
         ],
         "Resource": [
           "*"
@@ -9717,34 +9730,6 @@
       }
     ]
   },
-  "AmazonMechanicalTurkReadOnly": {
-    "policy": {
-      "PolicyName": "AmazonMechanicalTurkReadOnly",
-      "PolicyId": "ANPAIO5IY3G3WXSX5PPRM",
-      "Arn": "arn:aws:iam::aws:policy/AmazonMechanicalTurkReadOnly",
-      "Path": "/",
-      "DefaultVersionId": "v3",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Provides access to read only APIs in Amazon Mechanical Turk.",
-      "CreateDate": "2015-12-11T19:08:28.000Z",
-      "UpdateDate": "2019-09-25T21:06:26.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "mechanicalturk:Get*",
-          "mechanicalturk:List*"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
   "AmazonKinesisReadOnlyAccess": {
     "policy": {
       "PolicyName": "AmazonKinesisReadOnlyAccess",
@@ -9767,6 +9752,34 @@
           "kinesis:Get*",
           "kinesis:List*",
           "kinesis:Describe*"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "AmazonMechanicalTurkReadOnly": {
+    "policy": {
+      "PolicyName": "AmazonMechanicalTurkReadOnly",
+      "PolicyId": "ANPAIO5IY3G3WXSX5PPRM",
+      "Arn": "arn:aws:iam::aws:policy/AmazonMechanicalTurkReadOnly",
+      "Path": "/",
+      "DefaultVersionId": "v3",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Provides access to read only APIs in Amazon Mechanical Turk.",
+      "CreateDate": "2015-12-11T19:08:28.000Z",
+      "UpdateDate": "2019-09-25T21:06:26.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "mechanicalturk:Get*",
+          "mechanicalturk:List*"
         ],
         "Resource": [
           "*"
@@ -24534,6 +24547,52 @@
       }
     ]
   },
+  "AWSIoTDeviceDefenderAudit": {
+    "policy": {
+      "PolicyName": "AWSIoTDeviceDefenderAudit",
+      "PolicyId": "ANPAJKUN6OAGIHZ66TRKO",
+      "Arn": "arn:aws:iam::aws:policy/service-role/AWSIoTDeviceDefenderAudit",
+      "Path": "/service-role/",
+      "DefaultVersionId": "v3",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Provides read access for IoT and related resources",
+      "CreateDate": "2018-07-18T21:17:40.000Z",
+      "UpdateDate": "2019-11-25T23:52:43.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iot:GetLoggingOptions",
+          "iot:GetV2LoggingOptions",
+          "iot:ListCACertificates",
+          "iot:ListCertificates",
+          "iot:DescribeCACertificate",
+          "iot:DescribeCertificate",
+          "iot:ListPolicies",
+          "iot:GetPolicy",
+          "iot:GetEffectivePolicies",
+          "iot:ListRoleAliases",
+          "iot:DescribeRoleAlias",
+          "cognito-identity:GetIdentityPoolRoles",
+          "iam:ListRolePolicies",
+          "iam:ListAttachedRolePolicies",
+          "iam:GetRole",
+          "iam:GetPolicy",
+          "iam:GetPolicyVersion",
+          "iam:GetRolePolicy",
+          "iam:GenerateServiceLastAccessedDetails",
+          "iam:GetServiceLastAccessedDetails"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
   "AmazonCognitoPowerUser": {
     "policy": {
       "PolicyName": "AmazonCognitoPowerUser",
@@ -24593,52 +24652,6 @@
         "Resource": [
           "arn:aws:iam::*:role/aws-service-role/cognito-idp.amazonaws.com/AWSServiceRoleForAmazonCognitoIdp*",
           "arn:aws:iam::*:role/aws-service-role/email.cognito-idp.amazonaws.com/AWSServiceRoleForAmazonCognitoIdpEmail*"
-        ]
-      }
-    ]
-  },
-  "AWSIoTDeviceDefenderAudit": {
-    "policy": {
-      "PolicyName": "AWSIoTDeviceDefenderAudit",
-      "PolicyId": "ANPAJKUN6OAGIHZ66TRKO",
-      "Arn": "arn:aws:iam::aws:policy/service-role/AWSIoTDeviceDefenderAudit",
-      "Path": "/service-role/",
-      "DefaultVersionId": "v3",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Provides read access for IoT and related resources",
-      "CreateDate": "2018-07-18T21:17:40.000Z",
-      "UpdateDate": "2019-11-25T23:52:43.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "iot:GetLoggingOptions",
-          "iot:GetV2LoggingOptions",
-          "iot:ListCACertificates",
-          "iot:ListCertificates",
-          "iot:DescribeCACertificate",
-          "iot:DescribeCertificate",
-          "iot:ListPolicies",
-          "iot:GetPolicy",
-          "iot:GetEffectivePolicies",
-          "iot:ListRoleAliases",
-          "iot:DescribeRoleAlias",
-          "cognito-identity:GetIdentityPoolRoles",
-          "iam:ListRolePolicies",
-          "iam:ListAttachedRolePolicies",
-          "iam:GetRole",
-          "iam:GetPolicy",
-          "iam:GetPolicyVersion",
-          "iam:GetRolePolicy",
-          "iam:GenerateServiceLastAccessedDetails",
-          "iam:GetServiceLastAccessedDetails"
-        ],
-        "Resource": [
-          "*"
         ]
       }
     ]
@@ -33390,13 +33403,13 @@
       "PolicyId": "ANPAZKAPJZG4AKB7QD2CZ",
       "Arn": "arn:aws:iam::aws:policy/AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy",
       "Path": "/",
-      "DefaultVersionId": "v2",
+      "DefaultVersionId": "v3",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "This policy is for the AWS Elastic Beanstalk service role used to perform managed updates of Elastic Beanstalk environments. This policy should not be attached to other users or roles. The policy grants broad permissions to create and manage resources across a number of AWS services including AutoScaling, EC2, ECS, Elastic Load Balancing and CloudFormation.  This policy also allows passing of any IAM role usable with those services.",
       "CreateDate": "2021-03-03T22:18:00.000Z",
-      "UpdateDate": "2021-03-09T22:36:04.000Z",
+      "UpdateDate": "2021-06-16T22:40:31.000Z",
       "Tags": []
     },
     "document": [
@@ -33434,6 +33447,7 @@
           "autoscaling:DescribeScheduledActions",
           "ec2:DescribeAccountAttributes",
           "ec2:DescribeAddresses",
+          "ec2:DescribeAvailabilityZones",
           "ec2:DescribeImages",
           "ec2:DescribeInstanceAttribute",
           "ec2:DescribeInstances",
@@ -34637,6 +34651,44 @@
       }
     ]
   },
+  "AWSConfigRemediationServiceRolePolicy": {
+    "policy": {
+      "PolicyName": "AWSConfigRemediationServiceRolePolicy",
+      "PolicyId": "ANPAZKAPJZG4BC7ZOM6NP",
+      "Arn": "arn:aws:iam::aws:policy/aws-service-role/AWSConfigRemediationServiceRolePolicy",
+      "Path": "/aws-service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Allows AWS Config to remediate noncompliant resources on your behalf.",
+      "CreateDate": "2019-06-18T21:21:35.000Z",
+      "UpdateDate": "2019-06-18T21:21:35.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Action": [
+          "ssm:GetDocument",
+          "ssm:DescribeDocument",
+          "ssm:StartAutomationExecution"
+        ],
+        "Resource": [
+          "*"
+        ],
+        "Effect": "Allow"
+      },
+      {
+        "Action": [
+          "iam:PassRole"
+        ],
+        "Resource": [
+          "*"
+        ],
+        "Effect": "Allow"
+      }
+    ]
+  },
   "ConfigConformsServiceRolePolicy": {
     "policy": {
       "PolicyName": "ConfigConformsServiceRolePolicy",
@@ -34752,44 +34804,6 @@
         "Resource": [
           "arn:aws:cloudformation:*:*:stack/awsconfigconforms-*"
         ]
-      }
-    ]
-  },
-  "AWSConfigRemediationServiceRolePolicy": {
-    "policy": {
-      "PolicyName": "AWSConfigRemediationServiceRolePolicy",
-      "PolicyId": "ANPAZKAPJZG4BC7ZOM6NP",
-      "Arn": "arn:aws:iam::aws:policy/aws-service-role/AWSConfigRemediationServiceRolePolicy",
-      "Path": "/aws-service-role/",
-      "DefaultVersionId": "v1",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Allows AWS Config to remediate noncompliant resources on your behalf.",
-      "CreateDate": "2019-06-18T21:21:35.000Z",
-      "UpdateDate": "2019-06-18T21:21:35.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Action": [
-          "ssm:GetDocument",
-          "ssm:DescribeDocument",
-          "ssm:StartAutomationExecution"
-        ],
-        "Resource": [
-          "*"
-        ],
-        "Effect": "Allow"
-      },
-      {
-        "Action": [
-          "iam:PassRole"
-        ],
-        "Resource": [
-          "*"
-        ],
-        "Effect": "Allow"
       }
     ]
   },
@@ -35149,6 +35163,67 @@
       }
     ]
   },
+  "AmazonS3OutpostsFullAccess": {
+    "policy": {
+      "PolicyName": "AmazonS3OutpostsFullAccess",
+      "PolicyId": "ANPAZKAPJZG4BKMLUXKOR",
+      "Arn": "arn:aws:iam::aws:policy/AmazonS3OutpostsFullAccess",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Provides full access to Amazon S3 on Outposts via the AWS Management Console.",
+      "CreateDate": "2020-10-02T17:26:30.000Z",
+      "UpdateDate": "2020-10-02T17:26:30.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3-outposts:*"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "datasync:ListTasks",
+          "datasync:ListLocations",
+          "datasync:DescribeTask",
+          "datasync:DescribeLocation*"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:DescribeVpcs",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeNetworkInterfaces"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "outposts:ListOutposts",
+          "outposts:GetOutpost"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
   "AWSQuickSightElasticsearchPolicy": {
     "policy": {
       "PolicyName": "AWSQuickSightElasticsearchPolicy",
@@ -35240,67 +35315,6 @@
           "cloudwatch:PutMetricAlarm",
           "cloudwatch:DescribeAlarms",
           "cloudwatch:DeleteAlarms"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
-  "AmazonS3OutpostsFullAccess": {
-    "policy": {
-      "PolicyName": "AmazonS3OutpostsFullAccess",
-      "PolicyId": "ANPAZKAPJZG4BKMLUXKOR",
-      "Arn": "arn:aws:iam::aws:policy/AmazonS3OutpostsFullAccess",
-      "Path": "/",
-      "DefaultVersionId": "v1",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Provides full access to Amazon S3 on Outposts via the AWS Management Console.",
-      "CreateDate": "2020-10-02T17:26:30.000Z",
-      "UpdateDate": "2020-10-02T17:26:30.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "s3-outposts:*"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "datasync:ListTasks",
-          "datasync:ListLocations",
-          "datasync:DescribeTask",
-          "datasync:DescribeLocation*"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "ec2:DescribeVpcs",
-          "ec2:DescribeSubnets",
-          "ec2:DescribeSecurityGroups",
-          "ec2:DescribeNetworkInterfaces"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "outposts:ListOutposts",
-          "outposts:GetOutpost"
         ],
         "Resource": [
           "*"
@@ -43792,6 +43806,46 @@
       }
     ]
   },
+  "AWSSSMOpsInsightsServiceRolePolicy": {
+    "policy": {
+      "PolicyName": "AWSSSMOpsInsightsServiceRolePolicy",
+      "PolicyId": "ANPAZKAPJZG4ITJH2GWAW",
+      "Arn": "arn:aws:iam::aws:policy/aws-service-role/AWSSSMOpsInsightsServiceRolePolicy",
+      "Path": "/aws-service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Policy for Service Linked Role AWSServiceRoleForAmazonSSM_OpsInsights",
+      "CreateDate": "2021-06-16T20:12:52.000Z",
+      "UpdateDate": "2021-06-16T20:12:52.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Sid": "AllowCreateOpsItem",
+        "Effect": "Allow",
+        "Action": [
+          "ssm:CreateOpsItem",
+          "ssm:AddTagsToResource"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Sid": "AllowAccessOpsItem",
+        "Effect": "Allow",
+        "Action": [
+          "ssm:UpdateOpsItem",
+          "ssm:GetOpsItem"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
   "AWSTransferReadOnlyAccess": {
     "policy": {
       "PolicyName": "AWSTransferReadOnlyAccess",
@@ -44634,13 +44688,13 @@
       "PolicyId": "ANPAZKAPJZG4JK4QO3QK6",
       "Arn": "arn:aws:iam::aws:policy/AmazonDevOpsGuruReadOnlyAccess",
       "Path": "/",
-      "DefaultVersionId": "v2",
+      "DefaultVersionId": "v3",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "Provides read only access to Amazon DevOps Guru Console.",
       "CreateDate": "2020-12-01T16:34:40.000Z",
-      "UpdateDate": "2021-04-23T18:44:36.000Z",
+      "UpdateDate": "2021-06-14T22:34:43.000Z",
       "Tags": []
     },
     "document": [
@@ -44651,6 +44705,7 @@
           "devops-guru:DescribeAccountHealth",
           "devops-guru:DescribeAccountOverview",
           "devops-guru:DescribeAnomaly",
+          "devops-guru:DescribeFeedback",
           "devops-guru:DescribeInsight",
           "devops-guru:DescribeResourceCollectionHealth",
           "devops-guru:DescribeServiceIntegration",
@@ -44677,6 +44732,15 @@
         ],
         "Resource": [
           "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iam:GetRole"
+        ],
+        "Resource": [
+          "arn:aws:iam::*:role/aws-service-role/devops-guru.amazonaws.com/AWSServiceRoleForDevOpsGuru"
         ]
       },
       {
@@ -49678,6 +49742,117 @@
       }
     ]
   },
+  "AmazonSageMakerNotebooksServiceRolePolicy": {
+    "policy": {
+      "PolicyName": "AmazonSageMakerNotebooksServiceRolePolicy",
+      "PolicyId": "ANPAZKAPJZG4MYB7OEJED",
+      "Arn": "arn:aws:iam::aws:policy/aws-service-role/AmazonSageMakerNotebooksServiceRolePolicy",
+      "Path": "/aws-service-role/",
+      "DefaultVersionId": "v5",
+      "AttachmentCount": 1,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Managed policy for Service Linked Role for Amazon SageMaker Notebooks",
+      "CreateDate": "2019-10-18T20:27:37.000Z",
+      "UpdateDate": "2020-08-28T22:39:39.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "elasticfilesystem:CreateFileSystem"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "elasticfilesystem:CreateMountTarget",
+          "elasticfilesystem:DeleteFileSystem",
+          "elasticfilesystem:DeleteMountTarget"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "elasticfilesystem:DescribeFileSystems",
+          "elasticfilesystem:DescribeMountTargets"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:CreateTags"
+        ],
+        "Resource": [
+          "arn:aws:ec2:*:*:network-interface/*",
+          "arn:aws:ec2:*:*:security-group/*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:CreateNetworkInterface",
+          "ec2:CreateSecurityGroup",
+          "ec2:DeleteNetworkInterface",
+          "ec2:DescribeDhcpOptions",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeVpcs",
+          "ec2:ModifyNetworkInterfaceAttribute"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:CreateNetworkInterfacePermission",
+          "ec2:DeleteNetworkInterfacePermission",
+          "ec2:DeleteSecurityGroup",
+          "ec2:RevokeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "sso:CreateManagedApplicationInstance",
+          "sso:DeleteManagedApplicationInstance",
+          "sso:GetManagedApplicationInstance"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "sagemaker:CreateUserProfile",
+          "sagemaker:DescribeUserProfile"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
   "AWSControlTowerServiceRolePolicy": {
     "policy": {
       "PolicyName": "AWSControlTowerServiceRolePolicy",
@@ -49847,117 +50022,6 @@
         "Effect": "Allow",
         "Action": [
           "organizations:EnableAWSServiceAccess"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
-  "AmazonSageMakerNotebooksServiceRolePolicy": {
-    "policy": {
-      "PolicyName": "AmazonSageMakerNotebooksServiceRolePolicy",
-      "PolicyId": "ANPAZKAPJZG4MYB7OEJED",
-      "Arn": "arn:aws:iam::aws:policy/aws-service-role/AmazonSageMakerNotebooksServiceRolePolicy",
-      "Path": "/aws-service-role/",
-      "DefaultVersionId": "v5",
-      "AttachmentCount": 1,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Managed policy for Service Linked Role for Amazon SageMaker Notebooks",
-      "CreateDate": "2019-10-18T20:27:37.000Z",
-      "UpdateDate": "2020-08-28T22:39:39.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "elasticfilesystem:CreateFileSystem"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "elasticfilesystem:CreateMountTarget",
-          "elasticfilesystem:DeleteFileSystem",
-          "elasticfilesystem:DeleteMountTarget"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "elasticfilesystem:DescribeFileSystems",
-          "elasticfilesystem:DescribeMountTargets"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "ec2:CreateTags"
-        ],
-        "Resource": [
-          "arn:aws:ec2:*:*:network-interface/*",
-          "arn:aws:ec2:*:*:security-group/*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "ec2:CreateNetworkInterface",
-          "ec2:CreateSecurityGroup",
-          "ec2:DeleteNetworkInterface",
-          "ec2:DescribeDhcpOptions",
-          "ec2:DescribeNetworkInterfaces",
-          "ec2:DescribeSecurityGroups",
-          "ec2:DescribeSubnets",
-          "ec2:DescribeVpcs",
-          "ec2:ModifyNetworkInterfaceAttribute"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "ec2:AuthorizeSecurityGroupEgress",
-          "ec2:AuthorizeSecurityGroupIngress",
-          "ec2:CreateNetworkInterfacePermission",
-          "ec2:DeleteNetworkInterfacePermission",
-          "ec2:DeleteSecurityGroup",
-          "ec2:RevokeSecurityGroupEgress",
-          "ec2:RevokeSecurityGroupIngress"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "sso:CreateManagedApplicationInstance",
-          "sso:DeleteManagedApplicationInstance",
-          "sso:GetManagedApplicationInstance"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "sagemaker:CreateUserProfile",
-          "sagemaker:DescribeUserProfile"
         ],
         "Resource": [
           "*"
@@ -53535,6 +53599,33 @@
           "ec2:DescribeSecurityGroups",
           "elasticloadbalancing:DescribeInstanceHealth",
           "elasticloadbalancing:DescribeLoadBalancers"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "AWSKeyManagementServiceMultiRegionKeysServiceRolePolicy": {
+    "policy": {
+      "PolicyName": "AWSKeyManagementServiceMultiRegionKeysServiceRolePolicy",
+      "PolicyId": "ANPAZKAPJZG4P3NRAIDRH",
+      "Arn": "arn:aws:iam::aws:policy/aws-service-role/AWSKeyManagementServiceMultiRegionKeysServiceRolePolicy",
+      "Path": "/aws-service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Enables AWS KMS to synchronize the shared properties of multi-Region keys.",
+      "CreateDate": "2021-06-16T15:37:37.000Z",
+      "UpdateDate": "2021-06-16T15:37:37.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "kms:SynchronizeMultiRegionKey"
         ],
         "Resource": [
           "*"
