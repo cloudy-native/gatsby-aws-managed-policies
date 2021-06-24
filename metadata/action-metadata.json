@@ -1,12 +1,5 @@
 [
   {
-    "ServiceName": "",
-    "Action": "",
-    "Description": "### NOTE ### \nThe data contained herein was scraped on 17-May-2021 from the AWS Policy Generator at https://awspolicygen.s3.amazonaws.com/policygen.html and from associated documentation. It may not be entirely up to date.",
-    "AccessLevel": "",
-    "DocLink": ""
-  },
-  {
     "ServiceName": "Alexa for Business",
     "Action": "a4b:ApproveSkill",
     "Description": "Grants permission to associate a skill with the organization under the customer's AWS account",

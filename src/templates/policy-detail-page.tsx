@@ -1,11 +1,13 @@
 import { ExternalLinkIcon } from "@chakra-ui/icons"
-import { Button, Code, Container, Grid, GridItem, Heading, Link, Table, Tbody, Td, Text, Th, Thead, Tr, VStack } from "@chakra-ui/react"
+import { Code, Container, Grid, GridItem, Heading, Link, Text, VStack, Table, Thead, Tr, Td, Th, Tbody } from "@chakra-ui/react"
+import { graphql } from "gatsby"
 import React, { useMemo } from "react"
 import { useSortBy, useTable } from "react-table"
-import ServicesList from "../components/services-list"
+import ServicesList from '../components/services-list'
+import { getActionDetailMetadata } from '../gatsby-api/managed-policy-utils'
 
-function PolicyDetailPage({ pageContext }) {
-  const { policy, document, services, actions } = pageContext
+function PolicyDetailPage({ data }) {
+  console.log('data', data)
 
   const columns = useMemo(
     () => [
@@ -14,21 +16,24 @@ function PolicyDetailPage({ pageContext }) {
         accessor: "Action",
       },
       {
-        Header: "Description",
-        accessor: "Description",
-      },
-      {
         Header: "Access Level",
         accessor: "AccessLevel",
       },
+      {
+        Header: "Description",
+        accessor: "Description",
+      },
     ],
-    [],
+    []
   )
 
-  const data = useMemo(
-    () => actions as any[],
-    [],
-  )
+  const actionRows: any[] = getActionDetailMetadata().map(actionDetail => {
+    return {
+      Action: actionDetail.Action,
+      Description: actionDetail.Description,
+      AccessLevel: actionDetail.AccessLevel
+    }
+  })
 
   const {
     getTableProps,
@@ -36,33 +41,35 @@ function PolicyDetailPage({ pageContext }) {
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({ columns, data }, useSortBy)
+  } = useTable({
+    columns,
+    data: useMemo(() => actionRows, [])
+  }, useSortBy)
+
+  const { managedPolicy, services, actions } = data.allPolicyMetadata.nodes[0]
+  const { policy, document } = managedPolicy
 
   return (
     <Container maxWidth="100%" p={0}>
       <VStack spacing={4} align="stretch">
-        <Heading as={Link} fontSize="xl" href={`https://console.aws.amazon.com/iam/home?region=us-east-1#/policies/arn:aws:iam::aws:policy/${policy.PolicyName}$jsonEditor`}>{policy.PolicyName} <ExternalLinkIcon /> </Heading>
-        <Text >{policy.Description}</Text>
+        <Heading
+          as={Link}
+          fontSize="xl"
+          href={`https://console.aws.amazon.com/iam/home?region=us-east-1#/policies/arn:aws:iam::aws:policy/${policy.PolicyName}$jsonEditor`}
+        >
+          {policy.PolicyName} <ExternalLinkIcon />{" "}
+        </Heading>
+        <Text>{policy.Description}</Text>
         <ServicesList services={services} />
-        <Grid templateColumns="repeat(12, 1fr)" >
-          <GridItem colSpan={1}>
-            <Text fontWeight="bold" fontSize="sm">ARN</Text>
-          </GridItem>
-          <GridItem colSpan={11}>
-            <Text fontSize="sm">{policy.Arn}</Text>
-          </GridItem>
-          <GridItem colSpan={1}>
-            <Text fontWeight="bold" fontSize="sm">PolicyId</Text>
-          </GridItem>
-          <GridItem colSpan={11}>
-            <Text fontSize="sm">{policy.PolicyId}</Text>
-          </GridItem>
-          <GridItem colSpan={1}>
-            <Text fontWeight="bold" fontSize="sm">Path</Text>
-          </GridItem>
-          <GridItem colSpan={11}>
-            <Text fontSize="sm">{policy.Path}</Text>
-          </GridItem>
+        <Grid templateColumns="repeat(12, 1fr)">
+          <GridItem colSpan={1}> <Text fontWeight="bold" fontSize="sm"> ARN </Text> </GridItem>
+          <GridItem colSpan={11}> <Text fontSize="sm">{policy.Arn}</Text> </GridItem>
+
+          <GridItem colSpan={1}> <Text fontWeight="bold" fontSize="sm"> PolicyId </Text> </GridItem>
+          <GridItem colSpan={11}> <Text fontSize="sm">{policy.PolicyId}</Text> </GridItem>
+
+          <GridItem colSpan={1}> <Text fontWeight="bold" fontSize="sm"> Path </Text> </GridItem>
+          <GridItem colSpan={11}> <Text fontSize="sm">{policy.Path}</Text> </GridItem>
         </Grid>
         <Code
           display="block"
@@ -71,21 +78,21 @@ function PolicyDetailPage({ pageContext }) {
         />
         <Table {...getTableProps()}>
           <Thead>
-            {headerGroups.map((headerGroup) => (
+            {headerGroups.map(headerGroup => (
               <Tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column) => (
+                {headerGroup.headers.map(column => (
                   <Th>{column.render("Header")}</Th>
                 ))}
               </Tr>
             ))}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {rows.map(row => {
               prepareRow(row)
               return (
                 <Tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <Td fontSize="sm" p={2} {...cell.getCellProps()} >
+                  {row.cells.map(cell => (
+                    <Td fontSize="sm" p={1} {...cell.getCellProps()}>
                       {cell.render("Cell")}
                     </Td>
                   ))}
@@ -100,3 +107,39 @@ function PolicyDetailPage({ pageContext }) {
 }
 
 export default PolicyDetailPage
+
+export const pageQuery = graphql`
+  query ($PolicyName: String) {
+    allPolicyMetadata(
+      filter: {managedPolicy: {policy: {PolicyName: {eq: $PolicyName}}}}
+    ) {
+      nodes {
+        services
+        actions
+        managedPolicy {
+          document {
+            Effect
+            Sid
+            Action
+            Resource
+            NotAction
+            NotResource
+          }
+          policy {
+            PolicyName
+            PolicyId
+            Arn
+            Path
+            DefaultVersionId
+            AttachmentCount
+            PermissionsBoundaryUsageCount
+            IsAttachable
+            Description
+            CreateDate
+            UpdateDate
+          }
+        }
+      }
+    }
+  }
+`
