@@ -1,4 +1,4 @@
-import { ExternalLinkIcon } from "@chakra-ui/icons"
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   Box,
   Container,
@@ -6,13 +6,13 @@ import {
   Flex,
   Link,
   Spacer,
-  Text,
-} from "@chakra-ui/react"
-import "fontsource-open-sans"
-import { graphql, useStaticQuery } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
-import NavBar from "./navbar"
+  Text
+} from '@chakra-ui/react';
+import 'fontsource-open-sans';
+import { graphql, useStaticQuery } from 'gatsby';
+import PropTypes from 'prop-types';
+import React from 'react';
+import NavBar from './navbar';
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -24,7 +24,7 @@ const Layout = ({ children }) => {
         }
       }
     }
-  `)
+  `);
 
   return (
     <Container maxWidth="6xl">
@@ -42,18 +42,18 @@ const Layout = ({ children }) => {
         </Text>
         <Spacer />
         <Text fontSize="xs">
-          Made with ❤️ by{" "}
+          Made with ❤️ by{' '}
           <Link href="https://www.linkedin.com/in/stephenharrison/">
             Stephen Harrison <ExternalLinkIcon />
           </Link>
         </Text>
       </Flex>
     </Container>
-  )
-}
+  );
+};
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
+  children: PropTypes.node.isRequired
+};
 
-export default Layout
+export default Layout;

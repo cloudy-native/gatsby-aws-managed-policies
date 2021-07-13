@@ -29,44 +29,6 @@
       }
     ]
   },
-  "AmazonGlacierReadOnlyAccess": {
-    "policy": {
-      "PolicyName": "AmazonGlacierReadOnlyAccess",
-      "PolicyId": "ANPAI2D5NJKMU274MET4E",
-      "Arn": "arn:aws:iam::aws:policy/AmazonGlacierReadOnlyAccess",
-      "Path": "/",
-      "DefaultVersionId": "v2",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Provides read only access to Amazon Glacier via the AWS Management Console.",
-      "CreateDate": "2015-02-06T18:40:27.000Z",
-      "UpdateDate": "2016-05-05T18:46:10.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Action": [
-          "glacier:DescribeJob",
-          "glacier:DescribeVault",
-          "glacier:GetDataRetrievalPolicy",
-          "glacier:GetJobOutput",
-          "glacier:GetVaultAccessPolicy",
-          "glacier:GetVaultLock",
-          "glacier:GetVaultNotifications",
-          "glacier:ListJobs",
-          "glacier:ListMultipartUploads",
-          "glacier:ListParts",
-          "glacier:ListTagsForVault",
-          "glacier:ListVaults"
-        ],
-        "Effect": "Allow",
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
   "AWSMarketplaceFullAccess": {
     "policy": {
       "PolicyName": "AWSMarketplaceFullAccess",
@@ -169,6 +131,44 @@
         "Action": [
           "iam:PassRole"
         ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "AmazonGlacierReadOnlyAccess": {
+    "policy": {
+      "PolicyName": "AmazonGlacierReadOnlyAccess",
+      "PolicyId": "ANPAI2D5NJKMU274MET4E",
+      "Arn": "arn:aws:iam::aws:policy/AmazonGlacierReadOnlyAccess",
+      "Path": "/",
+      "DefaultVersionId": "v2",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Provides read only access to Amazon Glacier via the AWS Management Console.",
+      "CreateDate": "2015-02-06T18:40:27.000Z",
+      "UpdateDate": "2016-05-05T18:46:10.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Action": [
+          "glacier:DescribeJob",
+          "glacier:DescribeVault",
+          "glacier:GetDataRetrievalPolicy",
+          "glacier:GetJobOutput",
+          "glacier:GetVaultAccessPolicy",
+          "glacier:GetVaultLock",
+          "glacier:GetVaultNotifications",
+          "glacier:ListJobs",
+          "glacier:ListMultipartUploads",
+          "glacier:ListParts",
+          "glacier:ListTagsForVault",
+          "glacier:ListVaults"
+        ],
+        "Effect": "Allow",
         "Resource": [
           "*"
         ]
@@ -3249,7 +3249,7 @@
       {
         "Effect": "Allow",
         "Action": [
-          "SNS:Publish"
+          "sns:Publish"
         ],
         "Resource": [
           "arn:aws:sns:*:*:metrics-sns-topic-for-*"
@@ -3259,7 +3259,7 @@
         "Sid": "Discovery",
         "Effect": "Allow",
         "Action": [
-          "Discovery:*"
+          "discovery:*"
         ],
         "Resource": [
           "*"
@@ -5802,13 +5802,13 @@
       "PolicyId": "ANPAIICZJNOJN36GTG6CM",
       "Arn": "arn:aws:iam::aws:policy/AmazonVPCReadOnlyAccess",
       "Path": "/",
-      "DefaultVersionId": "v6",
+      "DefaultVersionId": "v7",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "Provides read only access to Amazon VPC via the AWS Management Console.",
       "CreateDate": "2015-02-06T18:41:17.000Z",
-      "UpdateDate": "2018-03-07T18:34:42.000Z",
+      "UpdateDate": "2021-06-23T17:03:33.000Z",
       "Tags": []
     },
     "document": [
@@ -5817,12 +5817,15 @@
         "Action": [
           "ec2:DescribeAccountAttributes",
           "ec2:DescribeAddresses",
+          "ec2:DescribeCarrierGateways",
           "ec2:DescribeClassicLinkInstances",
           "ec2:DescribeCustomerGateways",
           "ec2:DescribeDhcpOptions",
           "ec2:DescribeEgressOnlyInternetGateways",
           "ec2:DescribeFlowLogs",
           "ec2:DescribeInternetGateways",
+          "ec2:DescribeLocalGatewayRouteTables",
+          "ec2:DescribeLocalGatewayRouteTableVpcAssociations",
           "ec2:DescribeMovingAddresses",
           "ec2:DescribeNatGateways",
           "ec2:DescribeNetworkAcls",
@@ -17617,7 +17620,7 @@
       {
         "Effect": "Allow",
         "Action": [
-          "SNS:Publish"
+          "sns:Publish"
         ],
         "Resource": [
           "arn:aws:sns:*:*:metrics-sns-topic-for-*"
@@ -18096,13 +18099,13 @@
       "PolicyId": "ANPAJ7W6266ELXF5MISDS",
       "Arn": "arn:aws:iam::aws:policy/aws-service-role/AWSSupportServiceRolePolicy",
       "Path": "/aws-service-role/",
-      "DefaultVersionId": "v15",
+      "DefaultVersionId": "v16",
       "AttachmentCount": 1,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "Allows AWS Support to access AWS resources to provide billing, administrative, and support services.",
       "CreateDate": "2018-04-19T18:04:44.000Z",
-      "UpdateDate": "2021-03-23T17:45:15.000Z",
+      "UpdateDate": "2021-07-01T21:52:12.000Z",
       "Tags": []
     },
     "document": [
@@ -18194,6 +18197,9 @@
           "acm:getCertificate",
           "acm:listCertificates",
           "acm:listTagsForCertificate",
+          "airflow:getEnvironment",
+          "airflow:listEnvironments",
+          "airflow:listTagsForResource",
           "amplify:getApp",
           "amplify:getBranch",
           "amplify:getDomainAssociation",
@@ -18201,6 +18207,10 @@
           "amplify:getWebhook",
           "amplify:listApps",
           "amplify:listWebhooks",
+          "appflow:describeConnectorEntity",
+          "appflow:describeConnectorProfiles",
+          "appflow:describeFlow",
+          "appflow:listFlows",
           "application-autoscaling:describeScalableTargets",
           "application-autoscaling:describeScalingActivities",
           "application-autoscaling:describeScalingPolicies",
@@ -18244,6 +18254,14 @@
           "athena:listQueryExecutions",
           "athena:listTagsForResource",
           "athena:listWorkGroups",
+          "auditmanager:getAccountStatus",
+          "auditmanager:getDelegations",
+          "auditmanager:listAssessmentFrameworks",
+          "auditmanager:listAssessmentReports",
+          "auditmanager:listAssessments",
+          "auditmanager:listControls",
+          "auditmanager:listKeywordsForDataSource",
+          "auditmanager:listNotifications",
           "autoscaling-plans:describeScalingPlanResources",
           "autoscaling-plans:describeScalingPlans",
           "autoscaling-plans:getScalingPlanResourceForecastData",
@@ -18254,10 +18272,10 @@
           "autoscaling:describeAutoScalingNotificationTypes",
           "autoscaling:describeInstanceRefreshes",
           "autoscaling:describeLaunchConfigurations",
-          "autoscaling:describeLifecycleHookTypes",
           "autoscaling:describeLifecycleHooks",
-          "autoscaling:describeLoadBalancerTargetGroups",
+          "autoscaling:describeLifecycleHookTypes",
           "autoscaling:describeLoadBalancers",
+          "autoscaling:describeLoadBalancerTargetGroups",
           "autoscaling:describeMetricCollectionTypes",
           "autoscaling:describeNotificationConfigurations",
           "autoscaling:describePolicies",
@@ -18280,9 +18298,9 @@
           "backup:getRecoveryPointRestoreMetadata",
           "backup:getSupportedResourceTypes",
           "backup:listBackupJobs",
+          "backup:listBackupPlans",
           "backup:listBackupPlanTemplates",
           "backup:listBackupPlanVersions",
-          "backup:listBackupPlans",
           "backup:listBackupSelections",
           "backup:listBackupVaults",
           "backup:listProtectedResources",
@@ -18324,9 +18342,9 @@
           "cloudformation:describeStackInstance",
           "cloudformation:describeStackResource",
           "cloudformation:describeStackResources",
+          "cloudformation:describeStacks",
           "cloudformation:describeStackSet",
           "cloudformation:describeStackSetOperation",
-          "cloudformation:describeStacks",
           "cloudformation:estimateTemplateCost",
           "cloudformation:getStackPolicy",
           "cloudformation:getTemplate",
@@ -18336,10 +18354,10 @@
           "cloudformation:listImports",
           "cloudformation:listStackInstances",
           "cloudformation:listStackResources",
+          "cloudformation:listStacks",
           "cloudformation:listStackSetOperationResults",
           "cloudformation:listStackSetOperations",
           "cloudformation:listStackSets",
-          "cloudformation:listStacks",
           "cloudfront:getCloudFrontOriginAccessIdentity",
           "cloudfront:getCloudFrontOriginAccessIdentityConfig",
           "cloudfront:getDistribution",
@@ -18376,7 +18394,9 @@
           "cloudwatch:describeAlarms",
           "cloudwatch:describeAlarmsForMetric",
           "cloudwatch:describeAnomalyDetectors",
+          "cloudwatch:describeInsightRules",
           "cloudwatch:getDashboard",
+          "cloudwatch:getInsightRuleReport",
           "cloudwatch:getMetricData",
           "cloudwatch:getMetricStatistics",
           "cloudwatch:listDashboards",
@@ -18388,9 +18408,9 @@
           "codeartifact:getRepositoryEndPoint",
           "codeartifact:getRepositoryPermissionsPolicy",
           "codeartifact:listDomains",
+          "codeartifact:listPackages",
           "codeartifact:listPackageVersionAssets",
           "codeartifact:listPackageVersions",
-          "codeartifact:listPackages",
           "codeartifact:listRepositories",
           "codeartifact:listRepositoriesInDomain",
           "codebuild:batchGetBuildBatches",
@@ -18413,8 +18433,8 @@
           "codedeploy:batchGetApplications",
           "codedeploy:batchGetDeploymentGroups",
           "codedeploy:batchGetDeploymentInstances",
-          "codedeploy:batchGetDeploymentTargets",
           "codedeploy:batchGetDeployments",
+          "codedeploy:batchGetDeploymentTargets",
           "codedeploy:batchGetOnPremisesInstances",
           "codedeploy:getApplication",
           "codedeploy:getApplicationRevision",
@@ -18429,8 +18449,8 @@
           "codedeploy:listDeploymentConfigs",
           "codedeploy:listDeploymentGroups",
           "codedeploy:listDeploymentInstances",
-          "codedeploy:listDeploymentTargets",
           "codedeploy:listDeployments",
+          "codedeploy:listDeploymentTargets",
           "codedeploy:listGitHubAccountTokenNames",
           "codedeploy:listOnPremisesInstances",
           "codepipeline:getJobDetails",
@@ -18477,17 +18497,17 @@
           "cognito-sync:listDatasets",
           "cognito-sync:listIdentityPoolUsage",
           "compute-optimizer:getAutoScalingGroupRecommendations",
+          "compute-optimizer:getEBSVolumeRecommendations",
           "compute-optimizer:getEC2InstanceRecommendations",
           "compute-optimizer:getEC2RecommendationProjectedMetrics",
           "compute-optimizer:getEnrollmentStatus",
           "compute-optimizer:getRecommendationSummaries",
-          "compute-optimizer:getEBSVolumeRecommendations",
           "config:describeConfigRuleEvaluationStatus",
           "config:describeConfigRules",
-          "config:describeConfigurationRecorderStatus",
           "config:describeConfigurationRecorders",
-          "config:describeDeliveryChannelStatus",
+          "config:describeConfigurationRecorderStatus",
           "config:describeDeliveryChannels",
+          "config:describeDeliveryChannelStatus",
           "config:getResourceConfigHistory",
           "config:listDiscoveredResources",
           "connect:describeUser",
@@ -18506,8 +18526,8 @@
           "controltower:getHomeRegion",
           "controltower:getLandingZoneStatus",
           "controltower:listDirectoryGroups",
-          "controltower:listGuardrailViolations",
           "controltower:listGuardrailsForTarget",
+          "controltower:listGuardrailViolations",
           "controltower:listManagedAccounts",
           "controltower:listManagedAccountsForGuardrail",
           "controltower:listManagedAccountsForParent",
@@ -18591,8 +18611,8 @@
           "dlm:getLifecyclePolicy",
           "dms:describeAccountAttributes",
           "dms:describeConnections",
-          "dms:describeEndpointTypes",
           "dms:describeEndpoints",
+          "dms:describeEndpointTypes",
           "dms:describeOrderableReplicationInstances",
           "dms:describeRefreshSchemasStatus",
           "dms:describeReplicationInstances",
@@ -18649,25 +18669,25 @@
           "ec2:describeHostReservationOfferings",
           "ec2:describeHostReservations",
           "ec2:describeHosts",
-          "ec2:describeIdFormat",
           "ec2:describeIdentityIdFormat",
+          "ec2:describeIdFormat",
           "ec2:describeImageAttribute",
           "ec2:describeImages",
           "ec2:describeImportImageTasks",
           "ec2:describeImportSnapshotTasks",
           "ec2:describeInstanceAttribute",
-          "ec2:describeInstanceStatus",
           "ec2:describeInstances",
+          "ec2:describeInstanceStatus",
           "ec2:describeInternetGateways",
           "ec2:describeKeyPairs",
-          "ec2:describeLaunchTemplateVersions",
           "ec2:describeLaunchTemplates",
+          "ec2:describeLaunchTemplateVersions",
+          "ec2:describeLocalGatewayRouteTables",
           "ec2:describeLocalGatewayRouteTableVirtualInterfaceGroupAssociations",
           "ec2:describeLocalGatewayRouteTableVpcAssociations",
-          "ec2:describeLocalGatewayRouteTables",
+          "ec2:describeLocalGateways",
           "ec2:describeLocalGatewayVirtualInterfaceGroups",
           "ec2:describeLocalGatewayVirtualInterfaces",
-          "ec2:describeLocalGateways",
           "ec2:describeMovingAddresses",
           "ec2:describeNatGateways",
           "ec2:describeNetworkAcls",
@@ -18699,21 +18719,21 @@
           "ec2:describeTrafficMirrorTargets",
           "ec2:describeTransitGatewayAttachments",
           "ec2:describeTransitGatewayRouteTables",
-          "ec2:describeTransitGatewayVpcAttachments",
           "ec2:describeTransitGateways",
+          "ec2:describeTransitGatewayVpcAttachments",
           "ec2:describeVolumeAttribute",
-          "ec2:describeVolumeStatus",
           "ec2:describeVolumes",
           "ec2:describeVolumesModifications",
+          "ec2:describeVolumeStatus",
           "ec2:describeVpcAttribute",
           "ec2:describeVpcClassicLink",
           "ec2:describeVpcClassicLinkDnsSupport",
           "ec2:describeVpcEndpointConnectionNotifications",
           "ec2:describeVpcEndpointConnections",
+          "ec2:describeVpcEndpoints",
           "ec2:describeVpcEndpointServiceConfigurations",
           "ec2:describeVpcEndpointServicePermissions",
           "ec2:describeVpcEndpointServices",
-          "ec2:describeVpcEndpoints",
           "ec2:describeVpcPeeringConnections",
           "ec2:describeVpcs",
           "ec2:describeVpnConnections",
@@ -18765,8 +18785,8 @@
           "elasticache:listAllowedNodeTypeModifications",
           "elasticache:listTagsForResource",
           "elasticbeanstalk:checkDNSAvailability",
-          "elasticbeanstalk:describeApplicationVersions",
           "elasticbeanstalk:describeApplications",
+          "elasticbeanstalk:describeApplicationVersions",
           "elasticbeanstalk:describeConfigurationOptions",
           "elasticbeanstalk:describeConfigurationSettings",
           "elasticbeanstalk:describeEnvironmentHealth",
@@ -18784,8 +18804,8 @@
           "elasticfilesystem:describeFileSystemPolicy",
           "elasticfilesystem:describeFileSystems",
           "elasticfilesystem:describeLifecycleConfiguration",
-          "elasticfilesystem:describeMountTargetSecurityGroups",
           "elasticfilesystem:describeMountTargets",
+          "elasticfilesystem:describeMountTargetSecurityGroups",
           "elasticfilesystem:describeTags",
           "elasticfilesystem:listTagsForResource",
           "elasticloadbalancing:describeInstanceHealth",
@@ -18821,10 +18841,13 @@
           "es:describeElasticsearchDomains",
           "es:listDomainNames",
           "es:listTags",
+          "events:describeApiDestination",
           "events:describeEventBus",
           "events:describeEventSource",
           "events:describePartnerEventSource",
           "events:describeRule",
+          "events:listApiDestinations",
+          "events:listConnections",
           "events:listEventBuses",
           "events:listEventSources",
           "events:listPartnerEventSourceAccounts",
@@ -18902,8 +18925,8 @@
           "glue:getSchemaVersion",
           "glue:getSchemaVersionsDiff",
           "glue:getTable",
-          "glue:getTableVersions",
           "glue:getTables",
+          "glue:getTableVersions",
           "glue:getTrigger",
           "glue:getTriggers",
           "glue:getUserDefinedFunction",
@@ -18929,33 +18952,33 @@
           "greengrass:getServiceRoleForAccount",
           "greengrass:getSubscriptionDefinition",
           "greengrass:getSubscriptionDefinitionVersion",
-          "greengrass:listCoreDefinitionVersions",
           "greengrass:listCoreDefinitions",
+          "greengrass:listCoreDefinitionVersions",
           "greengrass:listDeployments",
-          "greengrass:listDeviceDefinitionVersions",
           "greengrass:listDeviceDefinitions",
-          "greengrass:listFunctionDefinitionVersions",
+          "greengrass:listDeviceDefinitionVersions",
           "greengrass:listFunctionDefinitions",
-          "greengrass:listGroupVersions",
+          "greengrass:listFunctionDefinitionVersions",
           "greengrass:listGroups",
-          "greengrass:listLoggerDefinitionVersions",
+          "greengrass:listGroupVersions",
           "greengrass:listLoggerDefinitions",
-          "greengrass:listResourceDefinitionVersions",
+          "greengrass:listLoggerDefinitionVersions",
           "greengrass:listResourceDefinitions",
-          "greengrass:listSubscriptionDefinitionVersions",
+          "greengrass:listResourceDefinitionVersions",
           "greengrass:listSubscriptionDefinitions",
+          "greengrass:listSubscriptionDefinitionVersions",
           "guardduty:getDetector",
           "guardduty:getFindings",
           "guardduty:getFindingsStatistics",
-          "guardduty:getIPSet",
           "guardduty:getInvitationsCount",
+          "guardduty:getIPSet",
           "guardduty:getMasterAccount",
           "guardduty:getMembers",
           "guardduty:getThreatIntelSet",
           "guardduty:listDetectors",
           "guardduty:listFindings",
-          "guardduty:listIPSets",
           "guardduty:listInvitations",
+          "guardduty:listIPSets",
           "guardduty:listMembers",
           "guardduty:listThreatIntelSets",
           "health:describeAffectedAccountsForOrganization",
@@ -18964,10 +18987,10 @@
           "health:describeEntityAggregates",
           "health:describeEventAggregates",
           "health:describeEventDetails",
-          "health:describeEventTypes",
           "health:describeEventDetailsForOrganization",
           "health:describeEvents",
           "health:describeEventsForOrganization",
+          "health:describeEventTypes",
           "health:describeHealthServiceStatusForOrganization",
           "iam:getAccessKeyLastUsed",
           "iam:getAccountAuthorizationDetails",
@@ -18986,8 +19009,8 @@
           "iam:getRole",
           "iam:getRolePolicy",
           "iam:getSAMLProvider",
-          "iam:getSSHPublicKey",
           "iam:getServerCertificate",
+          "iam:getSSHPublicKey",
           "iam:getUser",
           "iam:getUserPolicy",
           "iam:listAccessKeys",
@@ -19008,9 +19031,9 @@
           "iam:listRolePolicies",
           "iam:listRoles",
           "iam:listSAMLProviders",
-          "iam:listSSHPublicKeys",
           "iam:listServerCertificates",
           "iam:listSigningCertificates",
+          "iam:listSSHPublicKeys",
           "iam:listUserPolicies",
           "iam:listUsers",
           "iam:listVirtualMFADevices",
@@ -19090,8 +19113,8 @@
           "iot:listThingGroupsForThing",
           "iot:listThingPrincipals",
           "iot:listThingRegistrationTasks",
-          "iot:listThingTypes",
           "iot:listThings",
+          "iot:listThingTypes",
           "iot:listTopicRules",
           "iot:listTunnels",
           "iot:listV2LoggingLevels",
@@ -19099,8 +19122,8 @@
           "iotevents:describeDetectorModel",
           "iotevents:describeInput",
           "iotevents:describeLoggingOptions",
-          "iotevents:listDetectorModelVersions",
           "iotevents:listDetectorModels",
+          "iotevents:listDetectorModelVersions",
           "iotevents:listDetectors",
           "iotevents:listInputs",
           "iotsitewise:describeAccessPolicy",
@@ -19122,6 +19145,27 @@
           "iotsitewise:listPortals",
           "iotsitewise:listProjectAssets",
           "iotsitewise:listProjects",
+          "iotwireless:getDestination",
+          "iotwireless:getDeviceProfile",
+          "iotwireless:getPartnerAccount",
+          "iotwireless:getServiceEndpoint",
+          "iotwireless:getServiceProfile",
+          "iotwireless:getWirelessDevice",
+          "iotwireless:getWirelessDeviceStatistics",
+          "iotwireless:getWirelessGateway",
+          "iotwireless:getWirelessGatewayCertificate",
+          "iotwireless:getWirelessGatewayFirmwareInformation",
+          "iotwireless:getWirelessGatewayStatistics",
+          "iotwireless:getWirelessGatewayTask",
+          "iotwireless:getWirelessGatewayTaskDefinition",
+          "iotwireless:listDestinations",
+          "iotwireless:listDeviceProfiles",
+          "iotwireless:listPartnerAccounts",
+          "iotwireless:listServiceProfiles",
+          "iotwireless:listTagsForResource",
+          "iotwireless:listWirelessDevices",
+          "iotwireless:listWirelessGateways",
+          "iotwireless:listWirelessGatewayTaskDefinitions",
           "kafka:describeCluster",
           "kafka:getBootstrapBrokers",
           "kafka:listClusters",
@@ -19163,8 +19207,8 @@
           "lambda:listEventSourceMappings",
           "lambda:listFunctionEventInvokeConfigs",
           "lambda:listFunctions",
-          "lambda:listLayerVersions",
           "lambda:listLayers",
+          "lambda:listLayerVersions",
           "lambda:listProvisionedConcurrencyConfigs",
           "lambda:listVersionsByFunction",
           "launchwizard:describeProvisionedApp",
@@ -19175,17 +19219,17 @@
           "lex:getBotAliases",
           "lex:getBotChannelAssociation",
           "lex:getBotChannelAssociations",
-          "lex:getBotVersions",
           "lex:getBots",
+          "lex:getBotVersions",
           "lex:getBuiltinIntent",
           "lex:getBuiltinIntents",
           "lex:getBuiltinSlotTypes",
           "lex:getIntent",
-          "lex:getIntentVersions",
           "lex:getIntents",
+          "lex:getIntentVersions",
           "lex:getSlotType",
-          "lex:getSlotTypeVersions",
           "lex:getSlotTypes",
+          "lex:getSlotTypeVersions",
           "license-manager:getLicenseConfiguration",
           "license-manager:getServiceSettings",
           "license-manager:listAssociationsForLicenseConfiguration",
@@ -19195,22 +19239,29 @@
           "license-manager:listResourceInventory",
           "license-manager:listUsageForLicenseConfiguration",
           "lightsail:getActiveNames",
+          "lightsail:getAlarms",
+          "lightsail:getAutoSnapshots",
           "lightsail:getBlueprints",
           "lightsail:getBundles",
+          "lightsail:getCertificates",
+          "lightsail:getContainerImages",
+          "lightsail:getContainerServiceDeployments",
+          "lightsail:getContainerServices",
           "lightsail:getDisk",
           "lightsail:getDisks",
           "lightsail:getDiskSnapshot",
           "lightsail:getDiskSnapshots",
+          "lightsail:getDistributions",
           "lightsail:getDomain",
           "lightsail:getDomains",
           "lightsail:getExportSnapshotRecords",
           "lightsail:getInstance",
           "lightsail:getInstanceMetricData",
           "lightsail:getInstancePortStates",
+          "lightsail:getInstances",
           "lightsail:getInstanceSnapshot",
           "lightsail:getInstanceSnapshots",
           "lightsail:getInstanceState",
-          "lightsail:getInstances",
           "lightsail:getKeyPair",
           "lightsail:getKeyPairs",
           "lightsail:getLoadBalancer",
@@ -19234,6 +19285,16 @@
           "logs:describeQueries",
           "logs:describeSubscriptionFilters",
           "logs:testMetricFilter",
+          "lookoutmetrics:describeAlert",
+          "lookoutmetrics:describeAnomalyDetector",
+          "lookoutmetrics:describeMetricSet",
+          "lookoutmetrics:getAnomalyGroup",
+          "lookoutmetrics:getDataQualityMetrics",
+          "lookoutmetrics:getFeedback",
+          "lookoutmetrics:listAlerts",
+          "lookoutmetrics:listAnomalyDetectors",
+          "lookoutmetrics:listAnomalyGroupSummaries",
+          "lookoutmetrics:listMetricSets",
           "machinelearning:describeBatchPredictions",
           "machinelearning:describeDataSources",
           "machinelearning:describeEvaluations",
@@ -19256,8 +19317,8 @@
           "mediaconvert:getJobTemplate",
           "mediaconvert:getPreset",
           "mediaconvert:getQueue",
-          "mediaconvert:listJobTemplates",
           "mediaconvert:listJobs",
+          "mediaconvert:listJobTemplates",
           "medialive:describeChannel",
           "medialive:describeInput",
           "medialive:describeInputDevice",
@@ -19268,8 +19329,8 @@
           "medialive:describeSchedule",
           "medialive:listChannels",
           "medialive:listInputDevices",
-          "medialive:listInputSecurityGroups",
           "medialive:listInputs",
+          "medialive:listInputSecurityGroups",
           "medialive:listMultiplexes",
           "medialive:listOfferings",
           "medialive:listReservations",
@@ -19285,6 +19346,12 @@
           "mediastore:listItems",
           "mediatailor:getPlaybackConfiguration",
           "mediatailor:listPlaybackConfigurations",
+          "mgn:describeJobLogItems",
+          "mgn:describeJobs",
+          "mgn:describeReplicationConfigurationTemplates",
+          "mgn:describeSourceServers",
+          "mgn:getLaunchConfiguration",
+          "mgn:getReplicationConfiguration",
           "mobiletargeting:getAdmChannel",
           "mobiletargeting:getApnsChannel",
           "mobiletargeting:getApnsSandboxChannel",
@@ -19296,9 +19363,9 @@
           "mobiletargeting:getBaiduChannel",
           "mobiletargeting:getCampaign",
           "mobiletargeting:getCampaignActivities",
+          "mobiletargeting:getCampaigns",
           "mobiletargeting:getCampaignVersion",
           "mobiletargeting:getCampaignVersions",
-          "mobiletargeting:getCampaigns",
           "mobiletargeting:getEmailChannel",
           "mobiletargeting:getEndpoint",
           "mobiletargeting:getEventStream",
@@ -19309,9 +19376,9 @@
           "mobiletargeting:getImportJobs",
           "mobiletargeting:getSegment",
           "mobiletargeting:getSegmentImportJobs",
+          "mobiletargeting:getSegments",
           "mobiletargeting:getSegmentVersion",
           "mobiletargeting:getSegmentVersions",
-          "mobiletargeting:getSegments",
           "mobiletargeting:getSmsChannel",
           "mq:describeBroker",
           "mq:describeConfiguration",
@@ -19356,12 +19423,13 @@
           "opsworks:describeRdsDbInstances",
           "opsworks:describeServiceErrors",
           "opsworks:describeStackProvisioningParameters",
-          "opsworks:describeStackSummary",
           "opsworks:describeStacks",
+          "opsworks:describeStackSummary",
           "opsworks:describeTimeBasedAutoScaling",
           "opsworks:describeUserProfiles",
           "opsworks:describeVolumes",
           "opsworks:getHostnameSuggestion",
+          "organizations:listAccounts",
           "outposts:getOutpost",
           "outposts:getOutpostInstanceTypes",
           "outposts:listOutposts",
@@ -19384,8 +19452,8 @@
           "personalize:listEventTrackers",
           "personalize:listRecipes",
           "personalize:listSchemas",
-          "personalize:listSolutionVersions",
           "personalize:listSolutions",
+          "personalize:listSolutionVersions",
           "polly:describeVoices",
           "polly:getLexicon",
           "polly:listLexicons",
@@ -19406,16 +19474,16 @@
           "quicksight:listIAMPolicyAssignments",
           "quicksight:listIAMPolicyAssignmentsForUser",
           "quicksight:listTemplateAliases",
-          "quicksight:listTemplateVersions",
           "quicksight:listTemplates",
+          "quicksight:listTemplateVersions",
           "quicksight:listUserGroups",
           "quicksight:listUsers",
           "rds:describeAccountAttributes",
           "rds:describeCertificates",
           "rds:describeDBClusterParameterGroups",
           "rds:describeDBClusterParameters",
-          "rds:describeDBClusterSnapshots",
           "rds:describeDBClusters",
+          "rds:describeDBClusterSnapshots",
           "rds:describeDBEngineVersions",
           "rds:describeDBInstances",
           "rds:describeDBParameterGroups",
@@ -19427,8 +19495,8 @@
           "rds:describeEngineDefaultClusterParameters",
           "rds:describeEngineDefaultParameters",
           "rds:describeEventCategories",
-          "rds:describeEventSubscriptions",
           "rds:describeEvents",
+          "rds:describeEventSubscriptions",
           "rds:describeExportTasks",
           "rds:describeOptionGroupOptions",
           "rds:describeOptionGroups",
@@ -19439,15 +19507,15 @@
           "rds:listTagsForResource",
           "redshift:describeClusterParameterGroups",
           "redshift:describeClusterParameters",
+          "redshift:describeClusters",
           "redshift:describeClusterSecurityGroups",
           "redshift:describeClusterSnapshots",
           "redshift:describeClusterSubnetGroups",
           "redshift:describeClusterVersions",
-          "redshift:describeClusters",
           "redshift:describeDefaultClusterParameters",
           "redshift:describeEventCategories",
-          "redshift:describeEventSubscriptions",
           "redshift:describeEvents",
+          "redshift:describeEventSubscriptions",
           "redshift:describeHsmClientCertificates",
           "redshift:describeHsmConfigurations",
           "redshift:describeLoggingStatus",
@@ -19459,6 +19527,8 @@
           "redshift:describeStorage",
           "redshift:describeTableRestoreStatus",
           "redshift:describeTags",
+          "redshift-data:describeStatement",
+          "redshift-data:listStatements",
           "rekognition:listCollections",
           "rekognition:listFaces",
           "resource-groups:getGroup",
@@ -19514,8 +19584,18 @@
           "route53domains:listOperations",
           "route53domains:listTagsForDomain",
           "route53domains:viewBilling",
+          "route53resolver:getFirewallConfig",
+          "route53resolver:getFirewallDomainList",
+          "route53resolver:getFirewallRuleGroup",
+          "route53resolver:getFirewallRuleGroupAssociation",
           "route53resolver:getResolverDnssecConfig",
           "route53resolver:getResolverRulePolicy",
+          "route53resolver:listFirewallConfigs",
+          "route53resolver:listFirewallDomainLists",
+          "route53resolver:listFirewallDomains",
+          "route53resolver:listFirewallRuleGroupAssociations",
+          "route53resolver:listFirewallRuleGroups",
+          "route53resolver:listFirewallRules",
           "route53resolver:listResolverDnssecConfigs",
           "route53resolver:listResolverEndpointIpAddresses",
           "route53resolver:listResolverEndpoints",
@@ -19523,6 +19603,9 @@
           "route53resolver:listResolverRules",
           "route53resolver:listTagsForResource",
           "s3:getAccelerateConfiguration",
+          "s3:getAccessPointConfigurationForObjectLambda",
+          "s3:getAccessPointForObjectLambda",
+          "s3:getAccessPointPolicyStatusForObjectLambda",
           "s3:getAnalyticsConfiguration",
           "s3:getBucketAcl",
           "s3:getBucketCORS",
@@ -19539,6 +19622,7 @@
           "s3:getLifecycleConfiguration",
           "s3:getMetricsConfiguration",
           "s3:getReplicationConfiguration",
+          "s3:listAccessPointsForObjectLambda",
           "s3:listAllMyBuckets",
           "s3:listBucket",
           "s3:listBucketMultipartUploads",
@@ -19639,8 +19723,8 @@
           "sdb:listDomains",
           "secretsmanager:describeSecret",
           "secretsmanager:getResourcePolicy",
-          "secretsmanager:listSecretVersionIds",
           "secretsmanager:listSecrets",
+          "secretsmanager:listSecretVersionIds",
           "securityhub:getEnabledStandards",
           "securityhub:getFindings",
           "securityhub:getInsightResults",
@@ -19669,8 +19753,8 @@
           "servicecatalog:listRecordHistory",
           "servicecatalog:scanProvisionedProducts",
           "servicecatalog:searchProducts",
-          "servicequotas:getAWSDefaultServiceQuota",
           "servicequotas:getAssociationForServiceQuotaTemplate",
+          "servicequotas:getAWSDefaultServiceQuota",
           "servicequotas:getRequestedServiceQuotaChange",
           "servicequotas:getServiceQuota",
           "servicequotas:getServiceQuotaIncreaseRequestFromTemplate",
@@ -19745,8 +19829,8 @@
           "sqs:listQueues",
           "ssm:describeActivations",
           "ssm:describeAssociation",
-          "ssm:describeAssociationExecutionTargets",
           "ssm:describeAssociationExecutions",
+          "ssm:describeAssociationExecutionTargets",
           "ssm:describeAutomationExecutions",
           "ssm:describeAutomationStepExecutions",
           "ssm:describeAvailablePatches",
@@ -19756,22 +19840,23 @@
           "ssm:describeEffectivePatchesForPatchBaseline",
           "ssm:describeInstanceAssociationsStatus",
           "ssm:describeInstanceInformation",
+          "ssm:describeInstancePatches",
           "ssm:describeInstancePatchStates",
           "ssm:describeInstancePatchStatesForPatchGroup",
-          "ssm:describeInstancePatches",
           "ssm:describeInventoryDeletions",
+          "ssm:describeMaintenanceWindowExecutions",
           "ssm:describeMaintenanceWindowExecutionTaskInvocations",
           "ssm:describeMaintenanceWindowExecutionTasks",
-          "ssm:describeMaintenanceWindowExecutions",
+          "ssm:describeMaintenanceWindows",
           "ssm:describeMaintenanceWindowSchedule",
+          "ssm:describeMaintenanceWindowsForTarget",
           "ssm:describeMaintenanceWindowTargets",
           "ssm:describeMaintenanceWindowTasks",
-          "ssm:describeMaintenanceWindows",
-          "ssm:describeMaintenanceWindowsForTarget",
+          "ssm:describeOpsItems",
           "ssm:describeParameters",
           "ssm:describePatchBaselines",
-          "ssm:describePatchGroupState",
           "ssm:describePatchGroups",
+          "ssm:describePatchGroupState",
           "ssm:describePatchProperties",
           "ssm:describeSessions",
           "ssm:getAutomationExecution",
@@ -19785,18 +19870,20 @@
           "ssm:getMaintenanceWindowExecutionTask",
           "ssm:getMaintenanceWindowExecutionTaskInvocation",
           "ssm:getMaintenanceWindowTask",
+          "ssm:getOpsItem",
           "ssm:getPatchBaseline",
           "ssm:getPatchBaselineForPatchGroup",
           "ssm:getServiceSetting",
           "ssm:labelParameterVersion",
-          "ssm:listAssociationVersions",
           "ssm:listAssociations",
+          "ssm:listAssociationVersions",
           "ssm:listCommandInvocations",
           "ssm:listCommands",
           "ssm:listComplianceItems",
           "ssm:listComplianceSummaries",
-          "ssm:listDocumentVersions",
           "ssm:listDocuments",
+          "ssm:listDocumentVersions",
+          "ssm:listOpsItemEvents",
           "ssm:listResourceComplianceSummaries",
           "ssm:listResourceDataSync",
           "ssm:listTagsForResource",
@@ -19846,6 +19933,11 @@
           "swf:listDomains",
           "swf:listOpenWorkflowExecutions",
           "swf:listWorkflowTypes",
+          "synthetics:describeCanaries",
+          "synthetics:describeCanariesLastRun",
+          "synthetics:describeRuntimeVersions",
+          "synthetics:getCanary",
+          "synthetics:getCanaryRuns",
           "transfer:describeServer",
           "transfer:describeUser",
           "transfer:listServers",
@@ -20621,13 +20713,13 @@
       "PolicyId": "ANPAJBWPGNOVKZD3JI2P2",
       "Arn": "arn:aws:iam::aws:policy/AmazonVPCFullAccess",
       "Path": "/",
-      "DefaultVersionId": "v7",
+      "DefaultVersionId": "v8",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "Provides full access to Amazon VPC via the AWS Management Console.",
       "CreateDate": "2015-02-06T18:41:16.000Z",
-      "UpdateDate": "2018-03-15T18:30:25.000Z",
+      "UpdateDate": "2021-06-23T20:58:45.000Z",
       "Tags": []
     },
     "document": [
@@ -20650,6 +20742,7 @@
           "ec2:AttachVpnGateway",
           "ec2:AuthorizeSecurityGroupEgress",
           "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:CreateCarrierGateway",
           "ec2:CreateCustomerGateway",
           "ec2:CreateDefaultSubnet",
           "ec2:CreateDefaultVpc",
@@ -20657,8 +20750,8 @@
           "ec2:CreateEgressOnlyInternetGateway",
           "ec2:CreateFlowLogs",
           "ec2:CreateInternetGateway",
+          "ec2:CreateLocalGatewayRouteTableVpcAssociation",
           "ec2:CreateNatGateway",
-          "ec2:CreateNetworkAcl",
           "ec2:CreateNetworkAcl",
           "ec2:CreateNetworkAclEntry",
           "ec2:CreateNetworkInterface",
@@ -20676,11 +20769,13 @@
           "ec2:CreateVpnConnection",
           "ec2:CreateVpnConnectionRoute",
           "ec2:CreateVpnGateway",
+          "ec2:DeleteCarrierGateway",
           "ec2:DeleteCustomerGateway",
           "ec2:DeleteDhcpOptions",
           "ec2:DeleteEgressOnlyInternetGateway",
           "ec2:DeleteFlowLogs",
           "ec2:DeleteInternetGateway",
+          "ec2:DeleteLocalGatewayRouteTableVpcAssociation",
           "ec2:DeleteNatGateway",
           "ec2:DeleteNetworkAcl",
           "ec2:DeleteNetworkAclEntry",
@@ -20702,6 +20797,7 @@
           "ec2:DescribeAccountAttributes",
           "ec2:DescribeAddresses",
           "ec2:DescribeAvailabilityZones",
+          "ec2:DescribeCarrierGateways",
           "ec2:DescribeClassicLinkInstances",
           "ec2:DescribeCustomerGateways",
           "ec2:DescribeDhcpOptions",
@@ -20709,6 +20805,9 @@
           "ec2:DescribeFlowLogs",
           "ec2:DescribeInstances",
           "ec2:DescribeInternetGateways",
+          "ec2:DescribeIpv6Pools",
+          "ec2:DescribeLocalGatewayRouteTables",
+          "ec2:DescribeLocalGatewayRouteTableVpcAssociations",
           "ec2:DescribeKeyPairs",
           "ec2:DescribeMovingAddresses",
           "ec2:DescribeNatGateways",
@@ -21594,7 +21693,7 @@
           "logs:UpdateLogDelivery",
           "logs:DeleteLogDelivery",
           "logs:ListLogDeliveries",
-          "S3:GetBucketPolicy",
+          "s3:GetBucketPolicy",
           "logs:PutResourcePolicy",
           "logs:DescribeResourcePolicies",
           "logs:DescribeLogGroups",
@@ -22546,10 +22645,10 @@
       {
         "Effect": "Allow",
         "Action": [
-          "cloudFormation:CreateStack",
-          "cloudFormation:UpdateStack",
-          "cloudFormation:DeleteStack",
-          "cloudFormation:DescribeStackResources"
+          "cloudformation:CreateStack",
+          "cloudformation:UpdateStack",
+          "cloudformation:DeleteStack",
+          "cloudformation:DescribeStackResources"
         ],
         "Resource": [
           "arn:aws:cloudformation:*:*:stack/ApplicationInsights-*"
@@ -22558,8 +22657,8 @@
       {
         "Effect": "Allow",
         "Action": [
-          "cloudFormation:DescribeStacks",
-          "cloudFormation:ListStackResources"
+          "cloudformation:DescribeStacks",
+          "cloudformation:ListStackResources"
         ],
         "Resource": [
           "*"
@@ -24874,7 +24973,7 @@
       {
         "Effect": "Allow",
         "Action": [
-          "SNS:Publish"
+          "sns:Publish"
         ],
         "Resource": [
           "arn:aws:sns:*:*:metrics-sns-topic-for-*"
@@ -25032,33 +25131,6 @@
       }
     ]
   },
-  "AWSAccountUsageReportAccess": {
-    "policy": {
-      "PolicyName": "AWSAccountUsageReportAccess",
-      "PolicyId": "ANPAJLIB4VSBVO47ZSBB6",
-      "Arn": "arn:aws:iam::aws:policy/AWSAccountUsageReportAccess",
-      "Path": "/",
-      "DefaultVersionId": "v1",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Allows users to access the Account Usage Report page.",
-      "CreateDate": "2015-02-06T18:41:19.000Z",
-      "UpdateDate": "2015-02-06T18:41:19.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "aws-portal:ViewUsage"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
   "AWSIoTSiteWiseReadOnlyAccess": {
     "policy": {
       "PolicyName": "AWSIoTSiteWiseReadOnlyAccess",
@@ -25081,6 +25153,33 @@
           "iotsitewise:Describe*",
           "iotsitewise:List*",
           "iotsitewise:Get*"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "AWSAccountUsageReportAccess": {
+    "policy": {
+      "PolicyName": "AWSAccountUsageReportAccess",
+      "PolicyId": "ANPAJLIB4VSBVO47ZSBB6",
+      "Arn": "arn:aws:iam::aws:policy/AWSAccountUsageReportAccess",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Allows users to access the Account Usage Report page.",
+      "CreateDate": "2015-02-06T18:41:19.000Z",
+      "UpdateDate": "2015-02-06T18:41:19.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "aws-portal:ViewUsage"
         ],
         "Resource": [
           "*"
@@ -25373,13 +25472,13 @@
       "PolicyId": "ANPAJM2KI2UJDR24XPS2K",
       "Arn": "arn:aws:iam::aws:policy/AWSIoTDataAccess",
       "Path": "/",
-      "DefaultVersionId": "v2",
+      "DefaultVersionId": "v3",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "This policy gives full access to the AWS IoT messaging actions",
       "CreateDate": "2015-10-27T21:51:18.000Z",
-      "UpdateDate": "2017-11-16T18:24:11.000Z",
+      "UpdateDate": "2021-06-23T21:34:47.000Z",
       "Tags": []
     },
     "document": [
@@ -25392,7 +25491,8 @@
           "iot:Receive",
           "iot:GetThingShadow",
           "iot:UpdateThingShadow",
-          "iot:DeleteThingShadow"
+          "iot:DeleteThingShadow",
+          "iot:ListNamedShadowsForThing"
         ],
         "Resource": [
           "*"
@@ -27714,13 +27814,13 @@
       "PolicyId": "ANPAJQPCESDDYDLLSOGYO",
       "Arn": "arn:aws:iam::aws:policy/aws-service-role/AWSSecurityHubServiceRolePolicy",
       "Path": "/aws-service-role/",
-      "DefaultVersionId": "v7",
+      "DefaultVersionId": "v8",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "A service-linked role required for AWS Security Hub to access your resources.",
       "CreateDate": "2018-11-27T23:47:51.000Z",
-      "UpdateDate": "2020-09-21T19:59:01.000Z",
+      "UpdateDate": "2021-06-29T19:55:36.000Z",
       "Tags": []
     },
     "document": [
@@ -27755,7 +27855,8 @@
           "config:PutConfigRule",
           "config:DeleteConfigRule",
           "config:GetComplianceDetailsByConfigRule",
-          "config:DescribeConfigRuleEvaluationStatus"
+          "config:DescribeConfigRuleEvaluationStatus",
+          "config:PutEvaluations"
         ],
         "Resource": [
           "arn:aws:config:*:*:config-rule/aws-service-rule/*securityhub*"
@@ -32881,13 +32982,13 @@
       "PolicyId": "ANPAZKAPJZG4ACNRIK7M3",
       "Arn": "arn:aws:iam::aws:policy/AwsGlueDataBrewFullAccessPolicy",
       "Path": "/",
-      "DefaultVersionId": "v4",
+      "DefaultVersionId": "v6",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "Provides full access to AWS Glue DataBrew via the AWS Management Console. Also provides select access to related services (e.g., S3, KMS, Glue).",
       "CreateDate": "2020-11-11T16:51:39.000Z",
-      "UpdateDate": "2021-04-28T15:54:32.000Z",
+      "UpdateDate": "2021-06-30T18:23:37.000Z",
       "Tags": []
     },
     "document": [
@@ -32945,6 +33046,27 @@
         "Resource": [
           "arn:aws:glue:*:*:catalog",
           "arn:aws:glue:*:*:connection/AwsGlueDataBrew-*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "glue:GetDatabases"
+        ],
+        "Resource": [
+          "arn:aws:glue:*:*:catalog",
+          "arn:aws:glue:*:*:database/*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "glue:CreateTable"
+        ],
+        "Resource": [
+          "arn:aws:glue:*:*:catalog",
+          "arn:aws:glue:*:*:database/*",
+          "arn:aws:glue:*:*:table/*/awsgluedatabrew*"
         ]
       },
       {
@@ -37488,6 +37610,64 @@
       }
     ]
   },
+  "AWSBugBustPlayerAccess": {
+    "policy": {
+      "PolicyName": "AWSBugBustPlayerAccess",
+      "PolicyId": "ANPAZKAPJZG4CPEJPLKKR",
+      "Arn": "arn:aws:iam::aws:policy/AWSBugBustPlayerAccess",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "This IAM policy grants users access to participate in AWS BugBust events",
+      "CreateDate": "2021-06-24T07:15:00.000Z",
+      "UpdateDate": "2021-06-24T07:15:00.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Sid": "CodeGuruReviewerPermission",
+        "Effect": "Allow",
+        "Action": [
+          "codeguru-reviewer:DescribeCodeReview",
+          "codeguru-reviewer:ListRecommendations"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Sid": "CodeGuruProfilerPermission",
+        "Effect": "Allow",
+        "Action": [
+          "codeguru-profiler:DescribeProfilingGroup"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Sid": "AWSBugBustPlayerAccess",
+        "Effect": "Allow",
+        "Action": [
+          "bugbust:ListBugs",
+          "bugbust:ListProfilingGroups",
+          "bugbust:JoinEvent",
+          "bugbust:GetEvent",
+          "bugbust:ListEvents",
+          "bugbust:GetJoinEventStatus",
+          "bugbust:ListEventScores",
+          "bugbust:ListEventParticipants",
+          "bugbust:UpdateWorkItem",
+          "bugbust:ListPullRequests"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
   "AmazonSageMakerEdgeDeviceFleetPolicy": {
     "policy": {
       "PolicyName": "AmazonSageMakerEdgeDeviceFleetPolicy",
@@ -38995,6 +39175,120 @@
       }
     ]
   },
+  "AWSIncidentManagerResolverAccess": {
+    "policy": {
+      "PolicyName": "AWSIncidentManagerResolverAccess",
+      "PolicyId": "ANPAZKAPJZG4EQ4SDPENY",
+      "Arn": "arn:aws:iam::aws:policy/AWSIncidentManagerResolverAccess",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "This policy grants permissions to start, view, and update incidents with full access to custom timeline events & related items. Assign this policy to users who will create and resolve incidents.",
+      "CreateDate": "2021-05-10T06:12:34.000Z",
+      "UpdateDate": "2021-05-10T06:12:34.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Sid": "StartIncidentPermissions",
+        "Effect": "Allow",
+        "Action": [
+          "ssm-incidents:StartIncident"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Sid": "ResponsePlanReadOnlyPermissions",
+        "Effect": "Allow",
+        "Action": [
+          "ssm-incidents:ListResponsePlans",
+          "ssm-incidents:GetResponsePlan"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Sid": "IncidentRecordResolverPermissions",
+        "Effect": "Allow",
+        "Action": [
+          "ssm-incidents:ListIncidentRecords",
+          "ssm-incidents:GetIncidentRecord",
+          "ssm-incidents:UpdateIncidentRecord",
+          "ssm-incidents:ListTimelineEvents",
+          "ssm-incidents:CreateTimelineEvent",
+          "ssm-incidents:GetTimelineEvent",
+          "ssm-incidents:UpdateTimelineEvent",
+          "ssm-incidents:DeleteTimelineEvent",
+          "ssm-incidents:ListRelatedItems",
+          "ssm-incidents:UpdateRelatedItems"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "AWSCertificateManagerPrivateCAPrivilegedUser": {
+    "policy": {
+      "PolicyName": "AWSCertificateManagerPrivateCAPrivilegedUser",
+      "PolicyId": "ANPAZKAPJZG4EQ6CWU5X5",
+      "Arn": "arn:aws:iam::aws:policy/AWSCertificateManagerPrivateCAPrivilegedUser",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Provides privileged certificate user access to AWS Certificate Manager Private Certificate Authority",
+      "CreateDate": "2019-06-20T17:43:13.000Z",
+      "UpdateDate": "2019-06-20T17:43:13.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "acm-pca:IssueCertificate"
+        ],
+        "Resource": [
+          "arn:aws:acm-pca:*:*:certificate-authority/*"
+        ]
+      },
+      {
+        "Effect": "Deny",
+        "Action": [
+          "acm-pca:IssueCertificate"
+        ],
+        "Resource": [
+          "arn:aws:acm-pca:*:*:certificate-authority/*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "acm-pca:RevokeCertificate",
+          "acm-pca:GetCertificate",
+          "acm-pca:ListPermissions"
+        ],
+        "Resource": [
+          "arn:aws:acm-pca:*:*:certificate-authority/*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "acm-pca:ListCertificateAuthorities"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
   "AWSImageBuilderFullAccess": {
     "policy": {
       "PolicyName": "AWSImageBuilderFullAccess",
@@ -39134,149 +39428,6 @@
       }
     ]
   },
-  "AWSIncidentManagerResolverAccess": {
-    "policy": {
-      "PolicyName": "AWSIncidentManagerResolverAccess",
-      "PolicyId": "ANPAZKAPJZG4EQ4SDPENY",
-      "Arn": "arn:aws:iam::aws:policy/AWSIncidentManagerResolverAccess",
-      "Path": "/",
-      "DefaultVersionId": "v1",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "This policy grants permissions to start, view, and update incidents with full access to custom timeline events & related items. Assign this policy to users who will create and resolve incidents.",
-      "CreateDate": "2021-05-10T06:12:34.000Z",
-      "UpdateDate": "2021-05-10T06:12:34.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Sid": "StartIncidentPermissions",
-        "Effect": "Allow",
-        "Action": [
-          "ssm-incidents:StartIncident"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Sid": "ResponsePlanReadOnlyPermissions",
-        "Effect": "Allow",
-        "Action": [
-          "ssm-incidents:ListResponsePlans",
-          "ssm-incidents:GetResponsePlan"
-        ],
-        "Resource": [
-          "*"
-        ]
-      },
-      {
-        "Sid": "IncidentRecordResolverPermissions",
-        "Effect": "Allow",
-        "Action": [
-          "ssm-incidents:ListIncidentRecords",
-          "ssm-incidents:GetIncidentRecord",
-          "ssm-incidents:UpdateIncidentRecord",
-          "ssm-incidents:ListTimelineEvents",
-          "ssm-incidents:CreateTimelineEvent",
-          "ssm-incidents:GetTimelineEvent",
-          "ssm-incidents:UpdateTimelineEvent",
-          "ssm-incidents:DeleteTimelineEvent",
-          "ssm-incidents:ListRelatedItems",
-          "ssm-incidents:UpdateRelatedItems"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
-  "AWSCertificateManagerPrivateCAPrivilegedUser": {
-    "policy": {
-      "PolicyName": "AWSCertificateManagerPrivateCAPrivilegedUser",
-      "PolicyId": "ANPAZKAPJZG4EQ6CWU5X5",
-      "Arn": "arn:aws:iam::aws:policy/AWSCertificateManagerPrivateCAPrivilegedUser",
-      "Path": "/",
-      "DefaultVersionId": "v1",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Provides privileged certificate user access to AWS Certificate Manager Private Certificate Authority",
-      "CreateDate": "2019-06-20T17:43:13.000Z",
-      "UpdateDate": "2019-06-20T17:43:13.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "acm-pca:IssueCertificate"
-        ],
-        "Resource": [
-          "arn:aws:acm-pca:*:*:certificate-authority/*"
-        ]
-      },
-      {
-        "Effect": "Deny",
-        "Action": [
-          "acm-pca:IssueCertificate"
-        ],
-        "Resource": [
-          "arn:aws:acm-pca:*:*:certificate-authority/*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "acm-pca:RevokeCertificate",
-          "acm-pca:GetCertificate",
-          "acm-pca:ListPermissions"
-        ],
-        "Resource": [
-          "arn:aws:acm-pca:*:*:certificate-authority/*"
-        ]
-      },
-      {
-        "Effect": "Allow",
-        "Action": [
-          "acm-pca:ListCertificateAuthorities"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
-  "AWSBudgetsReadOnlyAccess": {
-    "policy": {
-      "PolicyName": "AWSBudgetsReadOnlyAccess",
-      "PolicyId": "ANPAZKAPJZG4EZCFS6BHW",
-      "Arn": "arn:aws:iam::aws:policy/AWSBudgetsReadOnlyAccess",
-      "Path": "/",
-      "DefaultVersionId": "v1",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Provides read only access to AWS Budgets Console via the AWS Management Console.",
-      "CreateDate": "2020-10-15T17:18:28.000Z",
-      "UpdateDate": "2020-10-15T17:18:28.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "aws-portal:ViewBilling",
-          "budgets:ViewBudget",
-          "budgets:Describe*"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
   "AmazonSSMPatchAssociation": {
     "policy": {
       "PolicyName": "AmazonSSMPatchAssociation",
@@ -39324,6 +39475,35 @@
         "Effect": "Allow",
         "Action": [
           "ssm:DescribePatchBaselines"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "AWSBudgetsReadOnlyAccess": {
+    "policy": {
+      "PolicyName": "AWSBudgetsReadOnlyAccess",
+      "PolicyId": "ANPAZKAPJZG4EZCFS6BHW",
+      "Arn": "arn:aws:iam::aws:policy/AWSBudgetsReadOnlyAccess",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Provides read only access to AWS Budgets Console via the AWS Management Console.",
+      "CreateDate": "2020-10-15T17:18:28.000Z",
+      "UpdateDate": "2020-10-15T17:18:28.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "aws-portal:ViewBilling",
+          "budgets:ViewBudget",
+          "budgets:Describe*"
         ],
         "Resource": [
           "*"
@@ -43096,17 +43276,18 @@
       "PolicyId": "ANPAZKAPJZG4IC74JOQJR",
       "Arn": "arn:aws:iam::aws:policy/AmazonQLDBReadOnly",
       "Path": "/",
-      "DefaultVersionId": "v2",
+      "DefaultVersionId": "v3",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "Provides read only access to Amazon QLDB.",
       "CreateDate": "2019-09-05T18:19:24.000Z",
-      "UpdateDate": "2020-05-19T17:47:55.000Z",
+      "UpdateDate": "2021-07-02T02:17:25.000Z",
       "Tags": []
     },
     "document": [
       {
+        "Effect": "Allow",
         "Action": [
           "qldb:ListLedgers",
           "qldb:DescribeLedger",
@@ -43118,10 +43299,8 @@
           "qldb:GetBlock",
           "qldb:GetDigest",
           "qldb:GetRevision",
-          "qldb:GetBlock",
           "qldb:ListTagsForResource"
         ],
-        "Effect": "Allow",
         "Resource": [
           "*"
         ]
@@ -44801,13 +44980,13 @@
       "PolicyId": "ANPAZKAPJZG4JLZR2TQJD",
       "Arn": "arn:aws:iam::aws:policy/aws-service-role/AmazonFISServiceRolePolicy",
       "Path": "/aws-service-role/",
-      "DefaultVersionId": "v2",
+      "DefaultVersionId": "v3",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "Policy to enable AWS FIS to manage monitoring and resource selection for experiments.",
       "CreateDate": "2020-12-21T21:18:19.000Z",
-      "UpdateDate": "2021-01-18T15:40:47.000Z",
+      "UpdateDate": "2021-06-30T13:50:04.000Z",
       "Tags": []
     },
     "document": [
@@ -44839,7 +45018,8 @@
         "Sid": "CloudWatch",
         "Effect": "Allow",
         "Action": [
-          "cloudwatch:DescribeAlarms"
+          "cloudwatch:DescribeAlarms",
+          "cloudwatch:DescribeAlarmHistory"
         ],
         "Resource": [
           "*"
@@ -45146,13 +45326,13 @@
       "PolicyId": "ANPAZKAPJZG4JXAE7KLRO",
       "Arn": "arn:aws:iam::aws:policy/AmazonConnect_FullAccess",
       "Path": "/",
-      "DefaultVersionId": "v1",
+      "DefaultVersionId": "v2",
       "AttachmentCount": 0,
       "PermissionsBoundaryUsageCount": 0,
       "IsAttachable": true,
       "Description": "The purpose of this policy is to grant permissions to AWS Connect users required to use Connect resources. This policy provides full access to AWS Connect resources via the Connect Console and public APIs",
       "CreateDate": "2020-11-20T19:54:21.000Z",
-      "UpdateDate": "2020-11-20T19:54:21.000Z",
+      "UpdateDate": "2021-07-01T18:41:26.000Z",
       "Tags": []
     },
     "document": [
@@ -45173,6 +45353,8 @@
           "kms:DescribeKey",
           "kms:ListAliases",
           "lex:GetBots",
+          "lex:ListBots",
+          "lex:ListBotAliases",
           "logs:CreateLogGroup",
           "s3:GetBucketLocation",
           "s3:ListAllMyBuckets",
@@ -48074,6 +48256,35 @@
       }
     ]
   },
+  "AWSBugBustServiceRolePolicy": {
+    "policy": {
+      "PolicyName": "AWSBugBustServiceRolePolicy",
+      "PolicyId": "ANPAZKAPJZG4LXHZTN64K",
+      "Arn": "arn:aws:iam::aws:policy/aws-service-role/AWSBugBustServiceRolePolicy",
+      "Path": "/aws-service-role/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Grants permissions to AWS BugBust to access resources on your behalf",
+      "CreateDate": "2021-06-24T06:59:05.000Z",
+      "UpdateDate": "2021-06-24T06:59:05.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "codeguru-reviewer:ListRecommendations",
+          "codeguru-reviewer:UntagResource",
+          "codeguru-reviewer:DescribeCodeReview"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
   "AWSAppRunnerServicePolicyForECRAccess": {
     "policy": {
       "PolicyName": "AWSAppRunnerServicePolicyForECRAccess",
@@ -49699,6 +49910,57 @@
           "kms:DescribeKey",
           "kms:ListAliases",
           "kms:ListKeys"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "AWSBugBustFullAccess": {
+    "policy": {
+      "PolicyName": "AWSBugBustFullAccess",
+      "PolicyId": "ANPAZKAPJZG4MQU5DXLFC",
+      "Arn": "arn:aws:iam::aws:policy/AWSBugBustFullAccess",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "This IAM policy grants users full access to the AWS BugBust console",
+      "CreateDate": "2021-06-24T07:03:26.000Z",
+      "UpdateDate": "2021-06-24T07:03:26.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Sid": "CodeGuruReviewerPermission",
+        "Effect": "Allow",
+        "Action": [
+          "codeguru-reviewer:DescribeCodeReview",
+          "codeguru-reviewer:ListRecommendations",
+          "codeguru-reviewer:ListCodeReviews"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Sid": "CodeGuruProfilerPermission",
+        "Effect": "Allow",
+        "Action": [
+          "codeguru-profiler:ListProfilingGroups",
+          "codeguru-profiler:DescribeProfilingGroup"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Sid": "AWSBugBustFullAccess",
+        "Effect": "Allow",
+        "Action": [
+          "bugbust:*"
         ],
         "Resource": [
           "*"
@@ -52480,6 +52742,40 @@
       }
     ]
   },
+  "AmazonManagedBlockchainConsoleFullAccess": {
+    "policy": {
+      "PolicyName": "AmazonManagedBlockchainConsoleFullAccess",
+      "PolicyId": "ANPAZKAPJZG4ONVQBFILL",
+      "Arn": "arn:aws:iam::aws:policy/AmazonManagedBlockchainConsoleFullAccess",
+      "Path": "/",
+      "DefaultVersionId": "v1",
+      "AttachmentCount": 0,
+      "PermissionsBoundaryUsageCount": 0,
+      "IsAttachable": true,
+      "Description": "Provides full access to Amazon Managed Blockchain via the AWS Management Console",
+      "CreateDate": "2019-04-29T21:23:25.000Z",
+      "UpdateDate": "2019-04-29T21:23:25.000Z",
+      "Tags": []
+    },
+    "document": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "managedblockchain:*",
+          "ec2:DescribeAvailabilityZones",
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeVpcs",
+          "ec2:CreateVpcEndpoint",
+          "kms:ListAliases",
+          "kms:DescribeKey"
+        ],
+        "Resource": [
+          "*"
+        ]
+      }
+    ]
+  },
   "AWSApplicationMigrationConversionServerPolicy": {
     "policy": {
       "PolicyName": "AWSApplicationMigrationConversionServerPolicy",
@@ -52531,40 +52827,6 @@
         "Action": [
           "savingsplans:Describe*",
           "savingsplans:List*"
-        ],
-        "Resource": [
-          "*"
-        ]
-      }
-    ]
-  },
-  "AmazonManagedBlockchainConsoleFullAccess": {
-    "policy": {
-      "PolicyName": "AmazonManagedBlockchainConsoleFullAccess",
-      "PolicyId": "ANPAZKAPJZG4ONVQBFILL",
-      "Arn": "arn:aws:iam::aws:policy/AmazonManagedBlockchainConsoleFullAccess",
-      "Path": "/",
-      "DefaultVersionId": "v1",
-      "AttachmentCount": 0,
-      "PermissionsBoundaryUsageCount": 0,
-      "IsAttachable": true,
-      "Description": "Provides full access to Amazon Managed Blockchain via the AWS Management Console",
-      "CreateDate": "2019-04-29T21:23:25.000Z",
-      "UpdateDate": "2019-04-29T21:23:25.000Z",
-      "Tags": []
-    },
-    "document": [
-      {
-        "Effect": "Allow",
-        "Action": [
-          "managedblockchain:*",
-          "ec2:DescribeAvailabilityZones",
-          "ec2:DescribeSecurityGroups",
-          "ec2:DescribeSubnets",
-          "ec2:DescribeVpcs",
-          "ec2:CreateVpcEndpoint",
-          "kms:ListAliases",
-          "kms:DescribeKey"
         ],
         "Resource": [
           "*"
