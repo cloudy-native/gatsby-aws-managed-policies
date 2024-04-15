@@ -89,7 +89,6 @@ function normalizeDocument(document: any): any {
 
 async function run() {
   const iamClient = new IAMClient({});
-
   const managedPolicies: Policy[] = [];
 
   const paginationConfiguration: IAMPaginationConfiguration = {

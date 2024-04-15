@@ -6,7 +6,7 @@ import PolicyCardGrid from '../components/policy-card-grid';
 function ActionDetailPage({ data, classes, pageContext }) {
   const nodes = data.allPolicyMetadata.nodes;
 
-  const policyPageNodes = nodes.map((node) => {
+  const policyNodes = nodes.map((node) => {
     const { actions, managedPolicy, services } = node;
 
     return {
@@ -22,7 +22,7 @@ function ActionDetailPage({ data, classes, pageContext }) {
         Managed Policies for Action: {pageContext.Action}
       </Heading>
 
-      <PolicyCardGrid policyPageNodes={policyPageNodes} />
+      <PolicyCardGrid policyNodes={policyNodes} />
     </VStack>
   );
 }
@@ -32,8 +32,8 @@ export default ActionDetailPage;
 export const pageQuery = graphql`
   query ($Action: String) {
     allPolicyMetadata(
-      filter: { actions: { in: [$Action] } }
-      sort: { fields: managedPolicy___policy___PolicyName }
+      filter: {actions: {in: [$Action]}}
+      sort: {managedPolicy: {policy: {PolicyName: ASC}}}
     ) {
       nodes {
         services

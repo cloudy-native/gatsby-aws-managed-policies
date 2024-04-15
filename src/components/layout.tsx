@@ -8,7 +8,6 @@ import {
   Spacer,
   Text
 } from '@chakra-ui/react';
-import 'fontsource-open-sans';
 import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -37,8 +36,8 @@ const Layout = ({ children }) => {
       <Divider />
       <Flex as="footer" my="2">
         <Text fontSize="xs">
-          © {new Date().getFullYear()}. Not affiliated with, supported, or
-          endorsed by AWS whatsoever.
+          © {new Date().getFullYear()}. Not affiliated with, supported, endorsed
+          by, connected to AWS whatsoever. I just a fan.
         </Text>
         <Spacer />
         <Text fontSize="xs">

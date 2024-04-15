@@ -2,8 +2,8 @@
 
 # Convert CSV to array of JSON
 #
-curl -s https://raw.githubusercontent.com/lesterw1/AwsServices/master/AwsServices.csv \
+curl -s https://raw.githubusercontent.com/awsles/AwsServices/master/AwsServices.csv \
     | sed '1d' \
-    | csv-parser \
-    | jq -s '.' \
+    | mlr --c2j cat \
+    | jq -s '.[]' \
         > metadata/service-metadata.json

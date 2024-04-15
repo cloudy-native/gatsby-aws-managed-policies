@@ -22,7 +22,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const policyQueryResult = await graphql(`
     {
       allPolicyMetadata {
-        distinct(field: managedPolicy___policy___PolicyName)
+        distinct(field: {managedPolicy: {policy: {PolicyName: SELECT}}})
       }
     }
   `);
@@ -46,7 +46,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const serviceDetailQueryResult = await graphql(`
     {
       allPolicyMetadata {
-        distinct(field: services)
+        distinct(field: {services: SELECT})
       }
     }
   `);

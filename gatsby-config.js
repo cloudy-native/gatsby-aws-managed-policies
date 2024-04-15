@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Explore AWS Managed Policies`,
+    title: `All About AWS Managed Policies`,
     description: `AWS Managed Policies. A maze of twisty passages all alike. Explore them here. Most things a clickable. Always up to date.`,
     author: `stephen@harrison.org`
   },

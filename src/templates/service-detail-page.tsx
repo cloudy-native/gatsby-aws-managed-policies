@@ -13,9 +13,8 @@ import React from 'react';
 import PolicyCardGrid from '../components/policy-card-grid';
 
 function ServiceDetailPage({ data, classes, pageContext }) {
-  console.log('data', data);
-  const policyNodes = data.allPolicyMetadata.nodes;
-  const policyPageNodes = policyNodes.map((node) => {
+  const nodes = data.allPolicyMetadata.nodes;
+  const policyNodes = nodes.map((node) => {
     const { actions, managedPolicy, services } = node;
 
     return {
@@ -35,14 +34,14 @@ function ServiceDetailPage({ data, classes, pageContext }) {
           size="xs"
           to={`/service/${serviceDetail.ServiceShortName}`}
         >
-          Policies for Service
+          Policies for Service {serviceDetail.ServiceShortName}
         </Button>
         <Button
           as={GatsbyLink}
           size="xs"
           to={`/reference/${serviceDetail.ServiceShortName}`}
         >
-          Service Actions Reference
+          Service Actions Reference for {serviceDetail.ServiceShortName}
         </Button>
       </ButtonGroup>
 
@@ -70,7 +69,7 @@ function ServiceDetailPage({ data, classes, pageContext }) {
         </GridItem>
       </Grid>
 
-      <PolicyCardGrid policyPageNodes={policyPageNodes} />
+      <PolicyCardGrid policyNodes={policyNodes} />
     </VStack>
   );
 }

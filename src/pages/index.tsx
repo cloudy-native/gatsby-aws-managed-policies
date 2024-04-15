@@ -6,7 +6,7 @@ import { PolicyPageNode } from '../model';
 const slug = require('slug');
 
 function IndexPage({ data }) {
-  const policyPageNodes: PolicyPageNode[] = data.allPolicyMetadata.nodes.map(
+  const policyNodes: PolicyPageNode[] = data.allPolicyMetadata.nodes.map(
     (node) => {
       const { managedPolicy, services, actions } = node;
 
@@ -21,7 +21,7 @@ function IndexPage({ data }) {
   return (
     <>
       <SEO title="Home" />
-      <PolicyCardGrid policyPageNodes={policyPageNodes} />
+      <PolicyCardGrid policyNodes={policyNodes} />
     </>
   );
 }
@@ -31,8 +31,7 @@ export default IndexPage;
 export const query = graphql`
   {
     allPolicyMetadata(
-      limit: 100
-      sort: { fields: managedPolicy___policy___PolicyName }
+      sort: {managedPolicy: {policy: {PolicyName: ASC}}}
     ) {
       nodes {
         services

@@ -29,9 +29,9 @@ function AboutPage() {
           .
         </Text>
         <Text>
-          We use an awesome list of AWS actions from{' '}
+          This site would not be possible without the awesome AWS metadata from{' '}
           <Link
-            href="https://raw.githubusercontent.com/lesterw1/AwsServices/master/AwsServiceActions.csv"
+            href="https://github.com/awsles/AwsServices/"
             isExternal
           >
             https://github.com/lesterw1/AwsServices

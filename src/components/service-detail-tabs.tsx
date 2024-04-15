@@ -1,5 +1,6 @@
 import { Button, ButtonGroup } from '@chakra-ui/react'
 import { Link as GatsbyLink } from 'gatsby'
+import React from 'react'
 
 function ServiceDetailTabs({ serviceShortName, serviceFullName }) {
     return (
