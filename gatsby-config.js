@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `All About AWS Managed Policies`,
-    description: `AWS Managed Policies. A maze of twisty passages all alike. Explore them here. Most things a clickable. Always up to date.`,
+    title: `AWS Managed Policies Explorer`,
+    description: `AWS Managed Policies. A maze of twisty passages all alike. Explore them here. If it looks like a button, it's clickable. Always up to date.`,
     author: `stephen@harrison.org`
   },
   plugins: [

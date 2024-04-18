@@ -1,8 +1,3 @@
-import {
-  ActionDetail,
-  ManagedPolicy,
-  ServiceDetail,
-} from '../model';
 
 export function ensureArray(value: any) {
   if (!value) {
@@ -25,7 +20,7 @@ export function servicesForPolicyStatement(statement): string[] {
   }
 
   if (statement.NotAction) {
-    statement.NotAction.forEach(action=> {
+    statement.NotAction.forEach(action => {
       services.push(action.split(':')[0]);
     });
   }
@@ -38,7 +33,9 @@ export function servicesForPolicyDocument(document: any[]) {
     servicesForPolicyStatement(statement)
   );
 
-  return [...new Set(services.flat())];
+  // Remove (all) '*' because it's not a service
+  //
+  return [...new Set(services.flat())].filter(e => e !== '*')
 }
 
 export function actionsForPolicyStatement(statement): string[] {

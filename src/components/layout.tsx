@@ -25,10 +25,12 @@ const Layout = ({ children }) => {
     }
   `);
 
+  const { siteMetadata } = data.site
+
   return (
     <Container maxWidth="6xl">
-      <NavBar my="4" siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <Text fontSize="sm">{data.site.siteMetadata?.description}</Text>
+      <NavBar my="4" siteTitle={siteMetadata?.title || `Title`} />
+      <Text fontSize="sm">{siteMetadata?.description}</Text>
       <Divider mt={4} />
       <Box my="4" as="main">
         {children}
@@ -36,8 +38,8 @@ const Layout = ({ children }) => {
       <Divider />
       <Flex as="footer" my="2">
         <Text fontSize="xs">
-          © {new Date().getFullYear()}. Not affiliated with, supported, endorsed
-          by, connected to AWS whatsoever. I just a fan.
+          © {new Date().getFullYear()}. Not affiliated with, supported by, endorsed
+          by, connected to, employed by, or sponsored by AWS whatsoever. I'm just a fan.
         </Text>
         <Spacer />
         <Text fontSize="xs">

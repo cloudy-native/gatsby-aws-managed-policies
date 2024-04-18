@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function usePagination(items: any[], pageLimit: number) {
+function usePagination<T>(items: T[], pageLimit: number) {
     const [pageNumber, setPageNumber] = useState(0);
     const pageCount = Math.ceil(items.length / pageLimit);
 

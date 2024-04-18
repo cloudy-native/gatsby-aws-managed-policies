@@ -3,9 +3,6 @@ const path = require(`path`);
 const { slash } = require(`gatsby-core-utils`);
 const slug = require('slug');
 
-const serviceReferencePageTemplate = path.resolve(
-  `src/templates/service-reference-page.tsx`
-);
 const actionDetailPageTemplate = path.resolve(
   `src/templates/action-detail-page.tsx`
 );
@@ -20,11 +17,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
   const policyQueryResult = await graphql(`
-    {
-      allPolicyMetadata {
-        distinct(field: {managedPolicy: {policy: {PolicyName: SELECT}}})
-      }
+  {
+    allPolicyMetadata {
+      distinct(field: {policy: {PolicyName: SELECT}})
     }
+  }
   `);
 
   // Managed policy detail pages
@@ -56,13 +53,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       createPage({
         path: `/service/${service}/`,
         component: slash(serviceDetailPageTemplate),
-        context: {
-          service
-        }
-      });
-      createPage({
-        path: `/reference/${service}/`,
-        component: slash(serviceReferencePageTemplate),
         context: {
           service
         }

@@ -9,6 +9,7 @@ import {
 import Bottleneck from 'bottleneck';
 import * as fs from 'fs';
 import { ensureArray } from '../utils/utils';
+import { PolicyMetadata } from '../model';
 
 // Query all the Managed Policies and dump them out.
 //
@@ -22,7 +23,7 @@ import { ensureArray } from '../utils/utils';
 //
 // We actually omit the Condition for now.
 //
-// The service needs converting to lower case because it's inconsistent
+// The service to be converted to lower case because it's inconsistent
 //
 const metadataFile = './metadata/managed-policy-metadata.json';
 
@@ -87,6 +88,11 @@ function normalizeDocument(document: any): any {
   return statements.map((statement: any) => normalizeStatement(statement));
 }
 
+function asDates(policy: Policy): Policy {
+  return policy.CreateDate && policy.UpdateDate
+    ? { ...Policy, CreateDate: new Date(policy.CreateDate), UpdateDate: new Date(policy.UpdateDate) }
+    : policy
+}
 async function run() {
   const iamClient = new IAMClient({});
   const managedPolicies: Policy[] = [];
@@ -99,6 +105,7 @@ async function run() {
   for await (const page of paginateListPolicies(paginationConfiguration, {
     Scope: 'AWS'
   })) {
+    console.log('Page', page);
     if (page.Policies) {
       managedPolicies.push(...page.Policies);
     }
@@ -106,7 +113,7 @@ async function run() {
 
   // This is a mess
   //
-  const policyMetadata: { [key: string]: any } = {};
+  const policyMetadata: { [key: string]: PolicyMetadata } = {};
 
   const tasks = managedPolicies.map(async (managedPolicy) => {
     return rateLimiter.schedule(async () => {
@@ -127,12 +134,11 @@ async function run() {
         decodeURIComponent(policyVersion?.PolicyVersion?.Document || '')
       );
       const document = normalizeDocument(rawDocument);
-
       const policyName = managedPolicy?.PolicyName || ''
 
-      if (policyName) {
+      if (policyName && policy.Policy) {
         policyMetadata[policyName] = {
-          policy: policy.Policy,
+          policy: asDates(policy.Policy),
           document
         };
       }

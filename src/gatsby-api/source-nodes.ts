@@ -2,7 +2,7 @@ import { NodeInput, SourceNodesArgs } from 'gatsby';
 import { default as rawActionDetailMetadata } from '../../metadata/action-metadata.json';
 import { default as rawManagedPolicyMetadata } from '../../metadata/managed-policy-metadata.json';
 import { default as rawServiceDetailMetadata } from '../../metadata/service-metadata.json';
-import { ActionDetail, ManagedPolicy, ServiceDetail } from '../model';
+import { ActionDetail, PolicyMetadata, PolicyNode, ServiceDetail } from '../model';
 import {
   actionsForPolicyDocument,
   ensureArray,
@@ -10,13 +10,35 @@ import {
 } from '../utils/utils';
 const _ = require('lodash');
 
+// We need to convert the string dates to Date objects for the JSON serialization
+//
+function withDates(input: any): PolicyMetadata {
+  const { policy, document } = input
+
+  return {
+    policy: {
+      ...policy,
+      CreateDate: new Date(policy.CreateDate),
+      UpdateDate: new Date(policy.UpdateDate)
+    }, document
+  }
+}
+
+function mapWithDates(input: { [key: string]: any }): { [key: string]: PolicyMetadata } {
+  return Object.entries(input).reduce((acc, [key, value]) => {
+    acc[key] = withDates(value);
+
+    return acc;
+  }, {});
+
+}
+
 const actionDetailMetadata = <ActionDetail[]>rawActionDetailMetadata
-const managedPolicyMetadata = <{ [key: string]: any }>rawManagedPolicyMetadata
+const managedPolicyMetadata = mapWithDates(<{ [key: string]: any }>rawManagedPolicyMetadata)
 const serviceDetailMetadata = <ServiceDetail[]>rawServiceDetailMetadata
 
 exports.sourceNodes = (args: SourceNodesArgs) => {
-  const { actions, createNodeId, createContentDigest } = args;
-  const { createNode } = actions;
+  const { actions: { createNode }, createNodeId, createContentDigest } = args;
 
   // String with the format service1:action1 service2:action2 ... so we can expand glob patterns in actions. Space is the delimiter,
   // and we convert '*' to '[\w:]+' for a poor man's glob -> regex converter.
@@ -29,8 +51,9 @@ exports.sourceNodes = (args: SourceNodesArgs) => {
   //
   Object.keys(managedPolicyMetadata).forEach(policyName => {
     const managedPolicy = managedPolicyMetadata[policyName];
-    const services = servicesForPolicyDocument(managedPolicy.document);
-    const rawActions = actionsForPolicyDocument(managedPolicy.document);
+    const { policy, document } = managedPolicy
+    const services = servicesForPolicyDocument(document);
+    const rawActions = actionsForPolicyDocument(document);
 
     // Details of the unique actions in this policy, expanded with any wildcards in
     // the original actions
@@ -45,11 +68,7 @@ exports.sourceNodes = (args: SourceNodesArgs) => {
       .flat() // RegExMatchArray[]
       .flat(); // string[]
     const actions = [...new Set(expandedActionList)].sort();
-    const content = {
-      managedPolicy,
-      services,
-      actions
-    };
+    const content: PolicyNode = { policy, document, services, actions };
     const nodeInput: NodeInput = {
       id: createNodeId(`managed-policy-${policyName}`),
       parent: null,

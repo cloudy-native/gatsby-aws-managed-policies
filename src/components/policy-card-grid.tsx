@@ -1,11 +1,28 @@
-import { Button, ButtonGroup, Flex, HStack, Heading, SimpleGrid, Spacer, Text, VStack } from '@chakra-ui/react';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
+import {
+  Button,
+  ButtonGroup,
+  Flex,
+  HStack,
+  SimpleGrid,
+  Spacer,
+  Text,
+  VStack
+} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import usePagination from '../hooks/usePagination';
-import { PolicyPageNode } from '../model';
+import { PolicyNode } from '../model';
 import PolicyCard from './policy-card';
-import {ArrowBackIcon, ArrowForwardIcon} from '@chakra-ui/icons'
 
-const Pagination = ({items, pageLimit, setPageItems}) => {
+function Pagination({
+  items,
+  pageLimit,
+  setPageItems
+}: {
+  items: PolicyNode[];
+  pageLimit: number;
+  setPageItems;
+}) {
   const { pageNumber, changePage, pageData, nextPage, previousPage } =
     usePagination(items, pageLimit);
 
@@ -13,44 +30,51 @@ const Pagination = ({items, pageLimit, setPageItems}) => {
     setPageItems(pageData);
   }, [pageNumber]);
 
-  const data = pageData()
-  const firstPolicy = data[0].managedPolicy.policy.PolicyName
-  const lastPolicy = data[data.length-1].managedPolicy.policy.PolicyName
+  const data = pageData();
+  const firstPolicy = data[0].policy.PolicyName;
+  const lastPolicy = data[data.length - 1].policy.PolicyName;
 
   return (
-<>
-<Flex>
-  <Heading fontSize={"md"}>
-    {firstPolicy} … {lastPolicy}
-  </Heading>
-  <Spacer/>
-  <ButtonGroup size={"xs"}>
-    <Button leftIcon={<ArrowBackIcon />} onClick={previousPage}>Prev Page</Button>
-    <Button rightIcon={<ArrowForwardIcon />} onClick={nextPage}>Next Page</Button>
-  </ButtonGroup>
-</Flex>
-</>
+    <>
+      <VStack alignItems="flex-start">
+        <ButtonGroup size={'xs'}>
+          <Button leftIcon={<ArrowBackIcon />} onClick={previousPage}>
+            Prev Page
+          </Button>
+          <Text>{pageNumber + 1}</Text>
+          <Button rightIcon={<ArrowForwardIcon />} onClick={nextPage}>
+            Next Page
+          </Button>
+        </ButtonGroup>
+        <HStack>
+          <Text as="b">{firstPolicy}</Text>
+          <Text>…</Text>
+          <Text as="b">{lastPolicy}</Text>
+        </HStack>
+      </VStack>
+    </>
   );
-};
+}
 
-function PolicyCardGrid( {policyNodes} ) {
-  const [pageItems, setPageItems] = useState([]);
+function PolicyCardGrid({ policyNodes }: { policyNodes: PolicyNode[] }) {
+  const [pageItems, setPageItems] = useState<PolicyNode[]>([]);
 
   return (
-<>
-  <VStack spacing={4} align="stretch">
-    <Pagination
-      items={policyNodes}
-      pageLimit={50}
-      setPageItems={setPageItems}
+    <VStack spacing={4} align="stretch">
+      <Pagination
+        items={policyNodes}
+        pageLimit={48}
+        setPageItems={setPageItems}
       />
-    <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={2}>
-      {pageItems.map((policyPageNode: PolicyPageNode) => (
-        <PolicyCard policyPageNode={policyPageNode} />
-      ))}
-    </SimpleGrid>
-  </VStack>
-</>
+      <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={2}>
+        {pageItems.map((policyNode) => (
+          <PolicyCard
+            key={policyNode.policy.PolicyName}
+            policyNode={policyNode}
+          />
+        ))}
+      </SimpleGrid>
+    </VStack>
   );
 }
 

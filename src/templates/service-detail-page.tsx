@@ -1,76 +1,78 @@
 import {
-  Button,
-  ButtonGroup,
+  Code,
+  HStack,
   Heading,
-  VStack,
-  Grid,
-  GridItem,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
-  Code
+  VStack
 } from '@chakra-ui/react';
-import { graphql, Link as GatsbyLink } from 'gatsby';
+import { graphql } from 'gatsby';
 import React from 'react';
+import ActionsTable from '../components/actions-table';
 import PolicyCardGrid from '../components/policy-card-grid';
 
 function ServiceDetailPage({ data, classes, pageContext }) {
-  const nodes = data.allPolicyMetadata.nodes;
-  const policyNodes = nodes.map((node) => {
-    const { actions, managedPolicy, services } = node;
+  const { allPolicyMetadata, allServiceMetadata, allActionMetadata } = data;
+  const policyNodes = allPolicyMetadata.nodes.map((node: any) => {
+    const { policy, actions, services } = node;
 
     return {
-      managedPolicy,
+      policy,
       services,
       actions
     };
   });
-  const serviceDetail = data.allServiceMetadata.nodes[0];
+  const { ServiceName, ServiceShortName, ARNFormat, ARNRegex, conditionKeys } =
+    allServiceMetadata.nodes[0];
+  const actionNodes = allActionMetadata.nodes;
 
+  // Wish I could get a Grid with auto-fit columns working
+  //
   return (
-    <VStack align="stretch" spacing={5}>
-      <ButtonGroup>
-        <Button
-          as={GatsbyLink}
-          colorScheme="blue"
-          size="xs"
-          to={`/service/${serviceDetail.ServiceShortName}`}
-        >
-          Policies for Service {serviceDetail.ServiceShortName}
-        </Button>
-        <Button
-          as={GatsbyLink}
-          size="xs"
-          to={`/reference/${serviceDetail.ServiceShortName}`}
-        >
-          Service Actions Reference for {serviceDetail.ServiceShortName}
-        </Button>
-      </ButtonGroup>
+    <>
+      <Heading size="lg">Service: {ServiceName}</Heading>
+      <VStack alignItems={'flex-start'} pt={2}>
+        <HStack>
+          <Text as="b">Short Name:</Text>
+          <Text>{ServiceShortName}</Text>
+        </HStack>
+        <HStack>
+          <Text as="b">ARN Format:</Text>
+          <Code>{ARNFormat}</Code>
+        </HStack>
+        <HStack>
+          <Text as="b">ARN Regex:</Text>
+          <Code>{ARNRegex}</Code>
+        </HStack>
+      </VStack>
+      <Tabs isFitted pt={10} variant="enclosed">
+        <TabList>
+          <Tab>Referenced Policies</Tab>
+          <Tab>Actions</Tab>
+          <Tab>Conditions</Tab>
+        </TabList>
 
-      <Heading size="lg">{serviceDetail.ServiceName}</Heading>
-      <Grid templateColumns="repeat(12, 1fr)">
-        <GridItem colSpan={2}>
-          <Text fontWeight="bold">Short name</Text>
-        </GridItem>
-        <GridItem colSpan={10}>
-          <Text>{serviceDetail.ServiceShortName}</Text>
-        </GridItem>
-
-        <GridItem colSpan={2}>
-          <Text fontWeight="bold">ARN Format</Text>
-        </GridItem>
-        <GridItem colSpan={10}>
-          <Code>{serviceDetail.ARNFormat}</Code>
-        </GridItem>
-
-        <GridItem colSpan={2}>
-          <Text fontWeight="bold">ARN Regex</Text>
-        </GridItem>
-        <GridItem colSpan={10}>
-          <Code>{serviceDetail.ARNRegex}</Code>
-        </GridItem>
-      </Grid>
-
-      <PolicyCardGrid policyNodes={policyNodes} />
-    </VStack>
+        <TabPanels>
+          <TabPanel>
+            <PolicyCardGrid policyNodes={policyNodes} />
+          </TabPanel>
+          <TabPanel>
+            <ActionsTable nodes={actionNodes}></ActionsTable>
+          </TabPanel>
+          <TabPanel>
+            <VStack alignItems={'flex-start'}>
+              {conditionKeys.map((conditionKey: string) => (
+                <Code>{conditionKey}</Code>
+              ))}
+            </VStack>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </>
   );
 }
 
@@ -89,27 +91,35 @@ export const pageQuery = graphql`
         conditionKeys
       }
     }
+    allActionMetadata(
+      filter: { service: { eq: $service } }
+      sort: { AccessLevel: ASC }
+    ) {
+      nodes {
+        Action
+        Description
+        AccessLevel
+        ServiceName
+        DocLink
+        service
+      }
+    }
     allPolicyMetadata(filter: { services: { in: [$service] } }) {
       nodes {
         actions
         services
-        managedPolicy {
-          policy {
-            Arn
-            PolicyName
-            PolicyId
-            Path
-            Description
-            DefaultVersionId
-          }
-          document {
-            Effect
-            Sid
-            Action
-            NotAction
-            NotResource
-            Resource
-          }
+        policy {
+          PolicyName
+          PolicyId
+          Arn
+          Path
+          DefaultVersionId
+          AttachmentCount
+          PermissionsBoundaryUsageCount
+          IsAttachable
+          Description
+          CreateDate
+          UpdateDate
         }
       }
     }

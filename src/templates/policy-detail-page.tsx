@@ -1,52 +1,82 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
-  Button,
   Code,
   Container,
-  Grid,
-  GridItem,
+  HStack,
   Heading,
   Link,
-  Table,
-  Tbody,
-  Td,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
-  Th,
-  Thead,
-  Tr,
   VStack
 } from '@chakra-ui/react';
-import { graphql, Link as GatsbyLink } from 'gatsby';
-import React, { useMemo } from 'react';
-import { useTable } from 'react-table';
+import { graphql } from 'gatsby';
+import React from 'react';
 import ServicesList from '../components/services-list';
+import { PolicyNode } from '../model';
 
 function PolicyDetailPage({ data, classes, pageContext }) {
-  const policyMetadata = data.allPolicyMetadata.nodes[0];
-
-  const { managedPolicy, services, actions } = data.allPolicyMetadata.nodes[0];
-  const { policy, document } = managedPolicy;
+  const policyNode: PolicyNode = data.allPolicyMetadata.nodes[0];
+  const { policy, services, document } = policyNode;
 
   return (
     <Container maxWidth="100%" p={0}>
       <VStack spacing={4} align="stretch">
         <Heading
+          fontSize={'2xl'}
           as={Link}
-          fontSize="xl"
           href={`https://console.aws.amazon.com/iam/home?region=us-east-1#/policies/arn:aws:iam::aws:policy/${policy.PolicyName}$jsonEditor`}
         >
-          {policy.PolicyName} (in AWS console) <ExternalLinkIcon />
+          {policy.PolicyName} details (in AWS console) <ExternalLinkIcon />
         </Heading>
-        <Text>{policy.Description}</Text>
-        <Text><Code>{policy.Arn}</Code></Text>
-        <Heading fontSize={"lg"}>Referenced services</Heading>
-        <ServicesList services={services} />
-        <Heading fontSize={"lg"}>Policy</Heading>
-        <Code
-          display="block"
-          whiteSpace="pre"
-          children={JSON.stringify(document, null, 2)}
-        />
+
+        <VStack alignItems={'flex-start'}>
+          <HStack>
+            <Text as="b">Policy Name</Text>
+            <Text>{policy.PolicyName}</Text>
+          </HStack>
+          <HStack>
+            <Text as="b">Description</Text>
+            <Text>{policy.Description}</Text>
+          </HStack>
+          <HStack>
+            <Text as="b">ARN</Text>
+            <Text>{policy.Arn}</Text>
+          </HStack>
+          <HStack>
+            <Text as="b">Path</Text>
+            <Text>{policy.Path}</Text>
+          </HStack>
+          <HStack>
+            <Text as="b">PolicyId</Text>
+            <Text>{policy.PolicyId}</Text>
+          </HStack>
+          <HStack>
+            <Text as="b">AttachmentCount</Text>
+            <Text>{policy.AttachmentCount}</Text>
+          </HStack>
+        </VStack>
+        <Tabs isFitted variant="enclosed">
+          <TabList>
+            <Tab>Referenced Services</Tab>
+            <Tab>JSON Policy</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <ServicesList services={services} />
+            </TabPanel>
+            <TabPanel>
+              <Code
+                display="block"
+                whiteSpace="pre"
+                children={JSON.stringify(document, null, 2)}
+              />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </VStack>
     </Container>
   );
@@ -56,34 +86,27 @@ export default PolicyDetailPage;
 
 export const pageQuery = graphql`
   query ($PolicyName: String) {
-    allPolicyMetadata(
-      filter: { managedPolicy: { policy: { PolicyName: { eq: $PolicyName } } } }
-    ) {
+    allPolicyMetadata(filter: { policy: { PolicyName: { eq: $PolicyName } } }) {
       nodes {
         services
         actions
-        managedPolicy {
-          document {
-            Effect
-            Sid
-            Action
-            Resource
-            NotAction
-            NotResource
-          }
-          policy {
-            PolicyName
-            PolicyId
-            Arn
-            Path
-            DefaultVersionId
-            AttachmentCount
-            PermissionsBoundaryUsageCount
-            IsAttachable
-            Description
-            CreateDate
-            UpdateDate
-          }
+        policy {
+          PolicyName
+          PolicyId
+          Arn
+          Path
+          DefaultVersionId
+          AttachmentCount
+          PermissionsBoundaryUsageCount
+          IsAttachable
+          Description
+          CreateDate
+          UpdateDate
+        }
+        document {
+          Effect
+          Action
+          Resource
         }
       }
     }

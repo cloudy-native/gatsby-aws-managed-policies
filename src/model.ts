@@ -1,6 +1,7 @@
-import { Policy, Statement } from "@aws-sdk/client-iam";
+import { ManagedPolicyDetail, Policy } from "@aws-sdk/client-iam";
 
 export interface ActionDetail {
+  service: string
   ServiceName: string;
   Action: string;
   Description: string;
@@ -8,40 +9,16 @@ export interface ActionDetail {
   DocLink: string;
 }
 
-// export interface Policy {
-//   PolicyName: string;
-//   PolicyId: string;
-//   Arn: string;
-//   Path: string;
-//   DefaultVersionId: string;
-//   AttachmentCount: number;
-//   PermissionsBoundaryUsageCount: number;
-//   IsAttachable: boolean;
-//   Description: string;
-//   CreateDate: string;
-//   UpdateDate: string;
-//   Tags: string[];
-// }
-
-// export interface Statement {
-//   Sid?: string
-//   Effect: string;
-//   Action?: string[];
-//   NotAction?: string[];
-//   Resource?: string[];
-//   NotResource?: string[];
-//   Condition?: any;
-// }
-
-export interface ManagedPolicy {
+export interface PolicyMetadata {
   policy: Policy;
-  document: Statement[];
+  document: any
 }
 
-export interface PolicyPageNode {
-  managedPolicy: ManagedPolicy;
+export interface PolicyNode {
+  policy: Policy;
   services: string[];
   actions: string[];
+  document: any
 }
 
 export interface ServiceDetail {

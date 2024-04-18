@@ -1,24 +1,15 @@
-import { Button, ButtonGroup, Heading, VStack } from '@chakra-ui/react';
-import { graphql, Link as GatsbyLink } from 'gatsby';
+import { Heading, VStack } from '@chakra-ui/react';
+import { graphql } from 'gatsby';
 import React from 'react';
 import PolicyCardGrid from '../components/policy-card-grid';
+import { PolicyNode } from '../model';
 
 function ActionDetailPage({ data, classes, pageContext }) {
-  const nodes = data.allPolicyMetadata.nodes;
-
-  const policyNodes = nodes.map((node) => {
-    const { actions, managedPolicy, services } = node;
-
-    return {
-      actions,
-      managedPolicy,
-      services
-    };
-  });
+  const policyNodes: PolicyNode[] = data.allPolicyMetadata.nodes;
 
   return (
     <VStack align="stretch" spacing={5}>
-      <Heading size="lg">
+      <Heading size="2xl">
         Managed Policies for Action: {pageContext.Action}
       </Heading>
 
@@ -33,33 +24,23 @@ export const pageQuery = graphql`
   query ($Action: String) {
     allPolicyMetadata(
       filter: {actions: {in: [$Action]}}
-      sort: {managedPolicy: {policy: {PolicyName: ASC}}}
+      sort: {policy: {PolicyName: ASC}}
     ) {
       nodes {
         services
         actions
-        managedPolicy {
-          document {
-            Effect
-            Sid
-            Action
-            Resource
-            NotAction
-            NotResource
-          }
-          policy {
-            PolicyName
-            PolicyId
-            Arn
-            Path
-            DefaultVersionId
-            AttachmentCount
-            PermissionsBoundaryUsageCount
-            IsAttachable
-            Description
-            CreateDate
-            UpdateDate
-          }
+        policy {
+          PolicyName
+          PolicyId
+          Arn
+          Path
+          DefaultVersionId
+          AttachmentCount
+          PermissionsBoundaryUsageCount
+          IsAttachable
+          Description
+          CreateDate
+          UpdateDate
         }
       }
     }

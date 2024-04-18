@@ -1,26 +1,28 @@
-import { Box, Button, Card, CardBody, CardHeader, Divider, Heading, Link as ChakraLink, Stack, Text, VStack, CardFooter, Flex, Spacer } from '@chakra-ui/react';
-import { Link as GatsbyLink } from 'gatsby';
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Text,
+  VStack
+} from '@chakra-ui/react';
 import React from 'react';
+import { PolicyNode } from '../model';
+import PolicyLink from './policy-link';
 import ServicesList from './services-list';
 
-function PolicyCard({ policyPageNode }) {
-  const { managedPolicy, services } = policyPageNode;
-  const { policy } = managedPolicy;
-  const { PolicyName, Description } = policy
+function PolicyCard({policyNode}) {
+  const {policy} = policyNode
 
   return (
     <Card>
       <CardHeader>
-        <VStack spacing={2}>
-        <Button as={GatsbyLink} size={"sm"} to={`/${PolicyName}`}>
-          {PolicyName}
-        </Button>
-          <Divider/>
-          <Text fontSize="sm">{Description}</Text>
+        <VStack alignItems="flex-start">
+          <PolicyLink policyNode={policyNode} />
+          <Text fontSize="sm">{policy.PolicyName}</Text>
         </VStack>
       </CardHeader>
       <CardBody>
-        <ServicesList services={services} />
+        <ServicesList services={policyNode.services} />
       </CardBody>
     </Card>
   );
