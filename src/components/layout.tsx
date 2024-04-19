@@ -1,17 +1,21 @@
-import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   Box,
   Container,
   Divider,
-  Flex,
-  Link,
-  Spacer,
   Text
 } from '@chakra-ui/react';
 import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import NavBar from './navbar';
+
+import { Icon } from '@chakra-ui/react';
+import { FaLinkedin } from 'react-icons/fa';
+import Footer from './footer';
+
+const LinkedInIcon = () => {
+  return <Icon as={FaLinkedin} boxSize={6} color="linkedin.500" />;
+};
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -25,7 +29,7 @@ const Layout = ({ children }) => {
     }
   `);
 
-  const { siteMetadata } = data.site
+  const { siteMetadata } = data.site;
 
   return (
     <Container maxWidth="6xl">
@@ -36,19 +40,7 @@ const Layout = ({ children }) => {
         {children}
       </Box>
       <Divider />
-      <Flex as="footer" my="2">
-        <Text fontSize="xs">
-          © {new Date().getFullYear()}. Not affiliated with, supported by, endorsed
-          by, connected to, employed by, or sponsored by AWS whatsoever. I'm just a fan.
-        </Text>
-        <Spacer />
-        <Text fontSize="xs">
-          Made with ❤️ by{' '}
-          <Link href="https://www.linkedin.com/in/stephenharrison/">
-            Stephen Harrison <ExternalLinkIcon />
-          </Link>
-        </Text>
-      </Flex>
+      <Footer />
     </Container>
   );
 };
